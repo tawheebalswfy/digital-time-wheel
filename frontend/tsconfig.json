@@ -1,0 +1,2 @@
+{"compilerOptions":{"target":"ES2022","lib":["dom","dom.iterable","esnext"],"skipLibCheck":true,"strict":true,"noEmit":true,"esModuleInterop":true,"module":"esnext","moduleResolution":"bundler","types":["node"],"resolveJsonModule":true,"isolatedModules":true,"jsx":"react-jsx","paths":{"@/*":["./*"]}},"include":["vite-env.d.ts","app/main.tsx","app/page.tsx","components/wheel/**/*.tsx","components/chart/**/*.tsx","components/dashboard/**/*.tsx","lib/api.ts","vite.config.ts"],"exclude":["node_modules","dist"]}
+

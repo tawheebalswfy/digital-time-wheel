@@ -1,0 +1,7 @@
+{
+  "arm": "D",
+  "identical_to": "A",
+  "result_file": "validation-A-result.json.gz",
+  "result_sha256": "a2adbe5b44e9107c061c68b3f6eb0c2acf47eb4165aed094acafd768f406286e",
+  "reason": "The existing baseline is already the existing combined strategy; do not count it as an independent trial."
+}

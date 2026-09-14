@@ -1,0 +1,53 @@
+# Local secrets and environment overrides
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Frontend dependencies and build caches
+node_modules/
+frontend/node_modules/
+frontend/.vite/
+frontend/.wrangler/
+frontend/dist/
+
+# Runtime state, logs, databases, and process files
+runtime/
+*.pid
+*.log
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+
+# Packaging outputs and unpacked payloads
+dist-installer/
+installer-build/
+publish/
+packaging/payload/
+packaging/InstallerStub/bin/
+packaging/InstallerStub/obj/
+packaging/InstallerStub/DigitalTimeWheelPayload.zip
+
+# Portable runtimes and temporary files
+python/
+portable-python/
+temp/
+tmp/
+testiexpress/
+
+# IDE/OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

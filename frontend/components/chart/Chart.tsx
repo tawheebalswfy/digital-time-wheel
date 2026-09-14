@@ -1,0 +1,15 @@
+'use client';
+import {useEffect,useRef} from 'react';
+import {createChart,CandlestickSeries,createSeriesMarkers,ColorType,LineStyle,type UTCTimestamp} from 'lightweight-charts';
+import type {Config} from '@/lib/api';
+export default function Chart({bars,analysis,signals,options,timeframe}:{bars:any[],analysis:any,signals:any[],options:Config,timeframe:string}){
+ const ref=useRef<HTMLDivElement>(null);const savedRange=useRef<any>(null);const oldTf=useRef(timeframe);
+ useEffect(()=>{if(!ref.current||!bars.length)return;const chart=createChart(ref.current,{autoSize:true,height:440,layout:{background:{type:ColorType.Solid,color:'#0d181e'},textColor:'#7e98a5',fontFamily:'Segoe UI',fontSize:10},grid:{vertLines:{color:'#182932'},horzLines:{color:'#182932'}},rightPriceScale:{borderColor:'#263943'},timeScale:{timeVisible:true,secondsVisible:false,borderColor:'#263943'}});const series=chart.addSeries(CandlestickSeries,{upColor:'#60c6ad',downColor:'#d7817b',borderVisible:false,wickUpColor:'#60c6ad',wickDownColor:'#d7817b'});series.setData(bars.map(b=>({time:b.time as UTCTimestamp,open:b.open,high:b.high,low:b.low,close:b.close})));
+ const add=(price:number,color:string,title:string,style=LineStyle.Dashed)=>{if(price>0)series.createPriceLine({price,color,lineWidth:1,lineStyle:style,axisLabelVisible:true,title})};
+ if(analysis){if(options.support!==false){add(analysis.support,'#5c9a8f','S');add(analysis.resistance,'#b7766e','R')}if(options.targets!==false){analysis.targets?.forEach((x:any,i:number)=>add(x.price,'#d8b675','T'+(i+1)));if(analysis.invalidation)add(analysis.invalidation.price,'#d66f74','Invalidation')}if(options.fibonacci!==false)analysis.fibonacci?.filter((x:any)=>x.ratio>0&&x.ratio<2).forEach((x:any)=>add(x.price,'#655b88','Fib '+(x.ratio*100).toFixed(1),LineStyle.Dotted));if(options.prices!==false)analysis.wheel?.levels?.filter((x:any)=>Math.abs(x.price-analysis.price)<(analysis.indicators?.atr||1)*3).slice(0,10).forEach((x:any)=>add(x.price,'#3e5962','W',LineStyle.Dotted))}
+ const times=new Set(bars.map(b=>b.time));const markers=signals.filter(s=>s.payload.timeframe===timeframe&&s.payload.direction!=='NEUTRAL').map(s=>{const p=s.payload;const t=p.timestamp-({M1:60,M5:300,M15:900,M30:1800,H1:3600,H4:14400,D1:86400}[timeframe]||60);return {time:t as UTCTimestamp,position:p.direction==='BUY'?'belowBar' as const:'aboveBar' as const,color:p.direction==='BUY'?'#60c6ad':'#d7817b',shape:p.direction==='BUY'?'arrowUp' as const:'arrowDown' as const,text:p.direction}}).filter(m=>times.has(m.time)).sort((a,b)=>a.time-b.time);createSeriesMarkers(series,markers);
+ if(oldTf.current===timeframe&&savedRange.current)chart.timeScale().setVisibleLogicalRange(savedRange.current);else chart.timeScale().fitContent();oldTf.current=timeframe;
+ return()=>{savedRange.current=chart.timeScale().getVisibleLogicalRange();chart.remove()}
+ },[bars,analysis,signals,options,timeframe]);
+ return <><div ref={ref} style={{height:440,width:'100%'}}/><div className="chart-credit"><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">Chart technology by TradingView</a><span>Closed-bar signals · UTC</span></div></>
+}

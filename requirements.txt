@@ -1,0 +1,8 @@
+fastapi==0.136.1
+uvicorn[standard]==0.47.0
+numpy==2.4.4
+pandas==2.3.3
+httpx==0.28.1
+tzdata>=2025.2
+pydantic>=2.12,<3
+MetaTrader5==5.0.6180; platform_system == "Windows"

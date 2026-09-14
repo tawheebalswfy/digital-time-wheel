@@ -1,0 +1,53 @@
+{
+  "observed_before_normalization": [
+    {
+      "raw_time": 1788995568,
+      "normalized_utc": 1788995568,
+      "observed_system_utc": 1788984768.2910416,
+      "raw_minus_system_seconds": 10799.708958387375,
+      "offset_seconds": 0,
+      "bid": 4398.05,
+      "ask": 4398.1
+    },
+    {
+      "raw_time": 1788995570,
+      "normalized_utc": 1788995570,
+      "observed_system_utc": 1788984770.2837384,
+      "raw_minus_system_seconds": 10799.71626162529,
+      "offset_seconds": 0,
+      "bid": 4398.0,
+      "ask": 4398.05
+    },
+    {
+      "raw_time": 1788995571,
+      "normalized_utc": 1788995571,
+      "observed_system_utc": 1788984772.2698326,
+      "raw_minus_system_seconds": 10798.730167388916,
+      "offset_seconds": 0,
+      "bid": 4398.06,
+      "ask": 4398.11
+    },
+    {
+      "raw_time": 1788995576,
+      "normalized_utc": 1788995576,
+      "observed_system_utc": 1788984776.2840884,
+      "raw_minus_system_seconds": 10799.715911626816,
+      "offset_seconds": 0,
+      "bid": 4398.18,
+      "ask": 4398.23
+    },
+    {
+      "raw_time": 1788995578,
+      "normalized_utc": 1788995578,
+      "observed_system_utc": 1788984778.271645,
+      "raw_minus_system_seconds": 10799.728354930878,
+      "offset_seconds": 0,
+      "bid": 4398.23,
+      "ask": 4398.28
+    }
+  ],
+  "broker_offset_seconds": 10800,
+  "confirmation": "Multiple fresh broker tick epochs are approximately 10800 seconds ahead of system UTC; earlier observation was approximately 10798 seconds. Fixed +03:00 broker wall-clock encoding selected for this connection only. Stale initial cached ticks are not used to re-estimate offset.",
+  "canonical_timezone": "UTC",
+  "analysis_timezone": "Asia/Aden"
+}

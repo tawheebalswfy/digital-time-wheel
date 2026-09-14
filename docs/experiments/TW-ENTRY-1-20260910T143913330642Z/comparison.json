@@ -1,0 +1,769 @@
+{
+  "experiment": "TW-ENTRY-1",
+  "summaries": {
+    "train": {
+      "A": {
+        "trades": 2180,
+        "win_rate": 0.686697247706422,
+        "average_win": 0.4590178403473515,
+        "average_loss": -2.4778256475846043,
+        "profit_factor": 0.4060316780927697,
+        "gross_expectancy": -0.061103307477201725,
+        "net_expectancy": -0.4611033074772018,
+        "net_pnl": -1005.2052103002999,
+        "max_drawdown": 1018.2501303002664,
+        "max_drawdown_percent": 10.182104200938825,
+        "mean_mae": 1.6162064220183527,
+        "max_mae": 45.42000000000007,
+        "mean_mfe": 1.4906146788990975,
+        "max_mfe": 13.580000000000837,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 16,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 3795,
+        "total_signals": 17992,
+        "signal_diagnostics": {
+          "available": 17923,
+          "unavailable": 69,
+          "actionable": 3777,
+          "signed_bps_sum": 861.3732997855293,
+          "actionable_signed_bps_sum": 861.3732997855293,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": 0.04805966075911004,
+          "mean_signed_bps_actionable": 0.22805753237636464,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "B": {
+        "trades": 3147,
+        "win_rate": 0.6860502065459168,
+        "average_win": 0.4585344474293678,
+        "average_loss": -2.4069024470709084,
+        "profit_factor": 0.4163026514284938,
+        "gross_expectancy": -0.041068873754703916,
+        "net_expectancy": -0.441068873754704,
+        "net_pnl": -1388.0437457060534,
+        "max_drawdown": 1413.0989084771427,
+        "max_drawdown_percent": 14.126248711238901,
+        "mean_mae": 1.5845376549094372,
+        "max_mae": 22.360000000000582,
+        "mean_mfe": 1.5082459485224107,
+        "max_mfe": 15.759999999999309,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 16,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 8170,
+        "total_signals": 17992,
+        "signal_diagnostics": {
+          "available": 17923,
+          "unavailable": 69,
+          "actionable": 8129,
+          "signed_bps_sum": 1356.507986922688,
+          "actionable_signed_bps_sum": 1356.507986922688,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": 0.07568531980821781,
+          "mean_signed_bps_actionable": 0.16687267645745946,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "C": {
+        "trades": 2991,
+        "win_rate": 0.6726847208291541,
+        "average_win": 0.45073808648110625,
+        "average_loss": -2.5695217424779084,
+        "profit_factor": 0.3605099405978693,
+        "gross_expectancy": -0.13783910260310492,
+        "net_expectancy": -0.537839102603105,
+        "net_pnl": -1608.676755885887,
+        "max_drawdown": 1615.7167558859492,
+        "max_drawdown_percent": 16.156537453898785,
+        "mean_mae": 1.6857238381812154,
+        "max_mae": 45.42000000000007,
+        "mean_mfe": 1.4769842861919154,
+        "max_mfe": 15.520000000000437,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 16,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 5784,
+        "total_signals": 17992,
+        "signal_diagnostics": {
+          "available": 17923,
+          "unavailable": 69,
+          "actionable": 5763,
+          "signed_bps_sum": 213.0752912428475,
+          "actionable_signed_bps_sum": 213.0752912428475,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": 0.011888371993686744,
+          "mean_signed_bps_actionable": 0.03697298130189962,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "D": {
+        "trades": 2180,
+        "win_rate": 0.686697247706422,
+        "average_win": 0.4590178403473515,
+        "average_loss": -2.4778256475846043,
+        "profit_factor": 0.4060316780927697,
+        "gross_expectancy": -0.061103307477201725,
+        "net_expectancy": -0.4611033074772018,
+        "net_pnl": -1005.2052103002999,
+        "max_drawdown": 1018.2501303002664,
+        "max_drawdown_percent": 10.182104200938825,
+        "mean_mae": 1.6162064220183527,
+        "max_mae": 45.42000000000007,
+        "mean_mfe": 1.4906146788990975,
+        "max_mfe": 13.580000000000837,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 16,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 3795,
+        "total_signals": 17992,
+        "signal_diagnostics": {
+          "available": 17923,
+          "unavailable": 69,
+          "actionable": 3777,
+          "signed_bps_sum": 861.3732997855293,
+          "actionable_signed_bps_sum": 861.3732997855293,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": 0.04805966075911004,
+          "mean_signed_bps_actionable": 0.22805753237636464,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      }
+    },
+    "validation": {
+      "A": {
+        "trades": 708,
+        "win_rate": 0.7033898305084746,
+        "average_win": 0.4973483514056099,
+        "average_loss": -2.7821213007693446,
+        "profit_factor": 0.42393050588772385,
+        "gross_expectancy": -0.07537569796831749,
+        "net_expectancy": -0.4753756979683175,
+        "net_pnl": -336.5659941615688,
+        "max_drawdown": 336.56599416156496,
+        "max_drawdown_percent": 3.3656599416156494,
+        "mean_mae": 1.6967796610169745,
+        "max_mae": 12.159999999999854,
+        "mean_mfe": 1.5781920903954503,
+        "max_mfe": 12.149999999999636,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 7,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 1178,
+        "total_signals": 6002,
+        "signal_diagnostics": {
+          "available": 5973,
+          "unavailable": 29,
+          "actionable": 1168,
+          "signed_bps_sum": -7.670417794273202,
+          "actionable_signed_bps_sum": -7.670417794273202,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": -0.001284181783739026,
+          "mean_signed_bps_actionable": -0.00656713852249418,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "B": {
+        "trades": 1057,
+        "win_rate": 0.6773888363292336,
+        "average_win": 0.49804846648043005,
+        "average_loss": -2.7389749902302367,
+        "profit_factor": 0.3818055031792148,
+        "gross_expectancy": -0.14625143771856475,
+        "net_expectancy": -0.5462514377185648,
+        "net_pnl": -577.387769668523,
+        "max_drawdown": 585.9852896685115,
+        "max_drawdown_percent": 5.855082784161189,
+        "mean_mae": 1.7806338694418296,
+        "max_mae": 23.48999999999978,
+        "mean_mfe": 1.5463670766319628,
+        "max_mfe": 8.279999999999745,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 7,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 2718,
+        "total_signals": 6002,
+        "signal_diagnostics": {
+          "available": 5973,
+          "unavailable": 29,
+          "actionable": 2706,
+          "signed_bps_sum": -132.21333720349878,
+          "actionable_signed_bps_sum": -132.21333720349878,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": -0.022135164440565677,
+          "mean_signed_bps_actionable": -0.04885932638710228,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "C": {
+        "trades": 974,
+        "win_rate": 0.7073921971252567,
+        "average_win": 0.4808168345428196,
+        "average_loss": -2.783165521385005,
+        "profit_factor": 0.4176524094716692,
+        "gross_expectancy": -0.07424987124714963,
+        "net_expectancy": -0.47424987124714973,
+        "net_pnl": -461.9193745947238,
+        "max_drawdown": 466.3861578408887,
+        "max_drawdown_percent": 4.662501627745581,
+        "mean_mae": 1.7269917864476454,
+        "max_mae": 20.850000000000364,
+        "mean_mfe": 1.5445893223819211,
+        "max_mfe": 12.149999999999636,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 7,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 1796,
+        "total_signals": 6002,
+        "signal_diagnostics": {
+          "available": 5973,
+          "unavailable": 29,
+          "actionable": 1786,
+          "signed_bps_sum": -201.13021776992412,
+          "actionable_signed_bps_sum": -201.13021776992412,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": -0.03367323250793975,
+          "mean_signed_bps_actionable": -0.11261490356658685,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "D": {
+        "trades": 708,
+        "win_rate": 0.7033898305084746,
+        "average_win": 0.4973483514056099,
+        "average_loss": -2.7821213007693446,
+        "profit_factor": 0.42393050588772385,
+        "gross_expectancy": -0.07537569796831749,
+        "net_expectancy": -0.4753756979683175,
+        "net_pnl": -336.5659941615688,
+        "max_drawdown": 336.56599416156496,
+        "max_drawdown_percent": 3.3656599416156494,
+        "mean_mae": 1.6967796610169745,
+        "max_mae": 12.159999999999854,
+        "mean_mfe": 1.5781920903954503,
+        "max_mfe": 12.149999999999636,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 7,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 1178,
+        "total_signals": 6002,
+        "signal_diagnostics": {
+          "available": 5973,
+          "unavailable": 29,
+          "actionable": 1168,
+          "signed_bps_sum": -7.670417794273202,
+          "actionable_signed_bps_sum": -7.670417794273202,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": -0.001284181783739026,
+          "mean_signed_bps_actionable": -0.00656713852249418,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      }
+    },
+    "test": {
+      "A": {
+        "trades": 717,
+        "win_rate": 0.6471408647140865,
+        "average_win": 0.4498833642241519,
+        "average_loss": -2.515970808701302,
+        "profit_factor": 0.3279380391630045,
+        "gross_expectancy": -0.196645374618442,
+        "net_expectancy": -0.596645374618442,
+        "net_pnl": -427.79473360142293,
+        "max_drawdown": 437.36109860141914,
+        "max_drawdown_percent": 4.371570684358601,
+        "mean_mae": 1.6167503486750223,
+        "max_mae": 26.950000000000728,
+        "mean_mfe": 1.3675592747559375,
+        "max_mfe": 10.030000000000655,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 6,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 1251,
+        "total_signals": 6033,
+        "signal_diagnostics": {
+          "available": 6009,
+          "unavailable": 24,
+          "actionable": 1242,
+          "signed_bps_sum": -591.1165662309558,
+          "actionable_signed_bps_sum": -591.1165662309558,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": -0.09837186990030883,
+          "mean_signed_bps_actionable": -0.47593926427613187,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "B": {
+        "trades": 1059,
+        "win_rate": 0.660056657223796,
+        "average_win": 0.45754084263229094,
+        "average_loss": -2.4174606114378823,
+        "profit_factor": 0.3674896701829989,
+        "gross_expectancy": -0.11979676215077087,
+        "net_expectancy": -0.5197967621507709,
+        "net_pnl": -550.4647711176664,
+        "max_drawdown": 550.8326711176578,
+        "max_drawdown_percent": 5.508124067292142,
+        "mean_mae": 1.5362700661000916,
+        "max_mae": 14.850000000000364,
+        "mean_mfe": 1.3774881964117025,
+        "max_mfe": 10.970000000000255,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 6,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 2676,
+        "total_signals": 6033,
+        "signal_diagnostics": {
+          "available": 6009,
+          "unavailable": 24,
+          "actionable": 2662,
+          "signed_bps_sum": 296.79894743333614,
+          "actionable_signed_bps_sum": 296.79894743333614,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": 0.04939240263493695,
+          "mean_signed_bps_actionable": 0.11149472104933739,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "C": {
+        "trades": 1011,
+        "win_rate": 0.6547972304648862,
+        "average_win": 0.45752454833836725,
+        "average_loss": -2.3935945335890594,
+        "profit_factor": 0.36257376728348756,
+        "gross_expectancy": -0.12668965501739143,
+        "net_expectancy": -0.5266896550173915,
+        "net_pnl": -532.4832412225828,
+        "max_drawdown": 542.1874407703071,
+        "max_drawdown_percent": 5.421798383491347,
+        "mean_mae": 1.5557764589515235,
+        "max_mae": 26.950000000000728,
+        "mean_mfe": 1.417210682492588,
+        "max_mfe": 9.989999999999782,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 6,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 1976,
+        "total_signals": 6033,
+        "signal_diagnostics": {
+          "available": 6009,
+          "unavailable": 24,
+          "actionable": 1965,
+          "signed_bps_sum": -198.50522284303403,
+          "actionable_signed_bps_sum": -198.50522284303403,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": -0.0330346518294282,
+          "mean_signed_bps_actionable": -0.10102046964022088,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      },
+      "D": {
+        "trades": 717,
+        "win_rate": 0.6471408647140865,
+        "average_win": 0.4498833642241519,
+        "average_loss": -2.515970808701302,
+        "profit_factor": 0.3279380391630045,
+        "gross_expectancy": -0.196645374618442,
+        "net_expectancy": -0.596645374618442,
+        "net_pnl": -427.79473360142293,
+        "max_drawdown": 437.36109860141914,
+        "max_drawdown_percent": 4.371570684358601,
+        "mean_mae": 1.6167503486750223,
+        "max_mae": 26.950000000000728,
+        "mean_mfe": 1.3675592747559375,
+        "max_mfe": 10.030000000000655,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 6,
+        "risk_ratio_note": "Withheld: short dependent daily sample; raw engine values retained in results, not interpreted.",
+        "actionable_signals": 1251,
+        "total_signals": 6033,
+        "signal_diagnostics": {
+          "available": 6009,
+          "unavailable": 24,
+          "actionable": 1242,
+          "signed_bps_sum": -591.1165662309558,
+          "actionable_signed_bps_sum": -591.1165662309558,
+          "horizon_seconds": 300,
+          "mean_signed_bps_all_available_opportunities": -0.09837186990030883,
+          "mean_signed_bps_actionable": -0.47593926427613187,
+          "scope": "Descriptive overlapping 5-minute close-to-close forecasts, not executable trade P&L or independent observations."
+        }
+      }
+    }
+  },
+  "comparisons": {
+    "train": {
+      "segment": "train",
+      "combined_minus_technical": {
+        "trades": -967,
+        "win_rate": 0.0006470411605052906,
+        "average_win": 0.000483392917983716,
+        "average_loss": -0.07092320051369594,
+        "profit_factor": -0.010270973335724132,
+        "gross_expectancy": -0.02003443372249781,
+        "net_expectancy": -0.020034433722497802,
+        "net_pnl": 382.83853540575353,
+        "max_drawdown": -394.8487781768763,
+        "max_drawdown_percent": -3.9441445103000756,
+        "mean_mae": 0.03166876710891553,
+        "max_mae": 23.05999999999949,
+        "mean_mfe": -0.017631269623313184,
+        "max_mfe": -2.179999999998472,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 0,
+        "risk_ratio_note": null,
+        "actionable_signals": -4375,
+        "total_signals": 0
+      },
+      "daily_marked_pnl": [
+        {
+          "date_utc": "2026-08-11",
+          "B_marked_pnl": -44.11609683187089,
+          "D_marked_pnl": -25.61934236086563,
+          "combined_minus_technical": 18.49675447100526
+        },
+        {
+          "date_utc": "2026-08-12",
+          "B_marked_pnl": -134.4351673164092,
+          "D_marked_pnl": -84.79257834238524,
+          "combined_minus_technical": 49.642588974023965
+        },
+        {
+          "date_utc": "2026-08-13",
+          "B_marked_pnl": -146.319613448959,
+          "D_marked_pnl": -115.12230412579993,
+          "combined_minus_technical": 31.19730932315906
+        },
+        {
+          "date_utc": "2026-08-14",
+          "B_marked_pnl": -85.22072041988213,
+          "D_marked_pnl": -58.817633651668075,
+          "combined_minus_technical": 26.403086768214052
+        },
+        {
+          "date_utc": "2026-08-16",
+          "B_marked_pnl": -15.564211556893497,
+          "D_marked_pnl": -5.601338539159769,
+          "combined_minus_technical": 9.962873017733727
+        },
+        {
+          "date_utc": "2026-08-17",
+          "B_marked_pnl": -80.8629569568784,
+          "D_marked_pnl": -68.46825884933969,
+          "combined_minus_technical": 12.394698107538716
+        },
+        {
+          "date_utc": "2026-08-18",
+          "B_marked_pnl": -113.63326000450616,
+          "D_marked_pnl": -83.39093129402318,
+          "combined_minus_technical": 30.24232871048298
+        },
+        {
+          "date_utc": "2026-08-19",
+          "B_marked_pnl": -35.0221211076514,
+          "D_marked_pnl": -10.846258716435841,
+          "combined_minus_technical": 24.17586239121556
+        },
+        {
+          "date_utc": "2026-08-20",
+          "B_marked_pnl": -133.1906355674073,
+          "D_marked_pnl": -81.75587744758013,
+          "combined_minus_technical": 51.434758119827166
+        },
+        {
+          "date_utc": "2026-08-21",
+          "B_marked_pnl": -90.75685048960986,
+          "D_marked_pnl": -67.56054263295118,
+          "combined_minus_technical": 23.196307856658677
+        },
+        {
+          "date_utc": "2026-08-23",
+          "B_marked_pnl": -11.213698393828963,
+          "D_marked_pnl": -1.8910207461449318,
+          "combined_minus_technical": 9.322677647684031
+        },
+        {
+          "date_utc": "2026-08-24",
+          "B_marked_pnl": -99.05031686340226,
+          "D_marked_pnl": -115.59945589418385,
+          "combined_minus_technical": -16.54913903078159
+        },
+        {
+          "date_utc": "2026-08-25",
+          "B_marked_pnl": -96.48339798437337,
+          "D_marked_pnl": -87.86797916801697,
+          "combined_minus_technical": 8.615418816356396
+        },
+        {
+          "date_utc": "2026-08-26",
+          "B_marked_pnl": -113.80328379759158,
+          "D_marked_pnl": -60.655740220607186,
+          "combined_minus_technical": 53.14754357698439
+        },
+        {
+          "date_utc": "2026-08-27",
+          "B_marked_pnl": -98.00294887950258,
+          "D_marked_pnl": -93.52071558771058,
+          "combined_minus_technical": 4.482233291791999
+        },
+        {
+          "date_utc": "2026-08-28",
+          "B_marked_pnl": -90.36846608732594,
+          "D_marked_pnl": -43.69523272339211,
+          "combined_minus_technical": 46.67323336393383
+        }
+      ],
+      "paired_block_resampling": {
+        "available": true,
+        "days": 16,
+        "block_length_represented_dates": 2,
+        "seed": 20260910,
+        "draws": 10000,
+        "valid_expectancy_draws": 10000,
+        "net_expectancy_delta_exploratory_95_interval": [
+          -0.07129101136659902,
+          0.029158304514096036
+        ],
+        "mean_daily_marked_pnl_delta_exploratory_95_interval": [
+          14.15818372297149,
+          32.029125314360584
+        ],
+        "interpretation": "Descriptive paired circular-block resampling; too few test dates and reused history for reliable significance or fresh predictive-edge claims."
+      },
+      "five_minute_mean_signed_bps_per_common_opportunity_delta": -0.02762565904910777,
+      "expectancy_scope": "Difference of strategy means, not matched-trade treatment effect; each strategy has different entries/occupancy."
+    },
+    "validation": {
+      "segment": "validation",
+      "combined_minus_technical": {
+        "trades": -349,
+        "win_rate": 0.026000994179240955,
+        "average_win": -0.0007001150748201512,
+        "average_loss": -0.04314631053910789,
+        "profit_factor": 0.04212500270850905,
+        "gross_expectancy": 0.07087573975024726,
+        "net_expectancy": 0.07087573975024725,
+        "net_pnl": 240.82177550695417,
+        "max_drawdown": -249.41929550694658,
+        "max_drawdown_percent": -2.4894228425455394,
+        "mean_mae": -0.08385420842485503,
+        "max_mae": -11.329999999999927,
+        "mean_mfe": 0.03182501376348745,
+        "max_mfe": 3.869999999999891,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 0,
+        "risk_ratio_note": null,
+        "actionable_signals": -1540,
+        "total_signals": 0
+      },
+      "daily_marked_pnl": [
+        {
+          "date_utc": "2026-08-28",
+          "B_marked_pnl": -23.93159217178436,
+          "D_marked_pnl": -17.823732866854698,
+          "combined_minus_technical": 6.1078593049296614
+        },
+        {
+          "date_utc": "2026-08-30",
+          "B_marked_pnl": -30.573443705239697,
+          "D_marked_pnl": -12.764698589309774,
+          "combined_minus_technical": 17.808745115929923
+        },
+        {
+          "date_utc": "2026-08-31",
+          "B_marked_pnl": -156.79444882698954,
+          "D_marked_pnl": -84.81511796427003,
+          "combined_minus_technical": 71.97933086271951
+        },
+        {
+          "date_utc": "2026-09-01",
+          "B_marked_pnl": -125.67831997594294,
+          "D_marked_pnl": -96.10387716643709,
+          "combined_minus_technical": 29.574442809505854
+        },
+        {
+          "date_utc": "2026-09-02",
+          "B_marked_pnl": -127.41433202678309,
+          "D_marked_pnl": -73.07440997386766,
+          "combined_minus_technical": 54.339922052915426
+        },
+        {
+          "date_utc": "2026-09-03",
+          "B_marked_pnl": -101.48850706828125,
+          "D_marked_pnl": -43.36213617809335,
+          "combined_minus_technical": 58.1263708901879
+        },
+        {
+          "date_utc": "2026-09-04",
+          "B_marked_pnl": -11.507125893489501,
+          "D_marked_pnl": -8.62202142273236,
+          "combined_minus_technical": 2.885104470757142
+        }
+      ],
+      "paired_block_resampling": {
+        "available": true,
+        "days": 7,
+        "block_length_represented_dates": 2,
+        "seed": 20260910,
+        "draws": 10000,
+        "valid_expectancy_draws": 10000,
+        "net_expectancy_delta_exploratory_95_interval": [
+          -0.006030484455942342,
+          0.27152439210259516
+        ],
+        "mean_daily_marked_pnl_delta_exploratory_95_interval": [
+          14.289843266060156,
+          51.704930497738005
+        ],
+        "interpretation": "Descriptive paired circular-block resampling; too few test dates and reused history for reliable significance or fresh predictive-edge claims."
+      },
+      "five_minute_mean_signed_bps_per_common_opportunity_delta": 0.02085098265682665,
+      "expectancy_scope": "Difference of strategy means, not matched-trade treatment effect; each strategy has different entries/occupancy."
+    },
+    "test": {
+      "segment": "test",
+      "combined_minus_technical": {
+        "trades": -342,
+        "win_rate": -0.012915792509709534,
+        "average_win": -0.007657478408139018,
+        "average_loss": -0.09851019726341992,
+        "profit_factor": -0.03955163101999437,
+        "gross_expectancy": -0.07684861246767113,
+        "net_expectancy": -0.07684861246767116,
+        "net_pnl": 122.67003751624344,
+        "max_drawdown": -113.47157251623867,
+        "max_drawdown_percent": -1.136553382933541,
+        "mean_mae": 0.08048028257493067,
+        "max_mae": 12.100000000000364,
+        "mean_mfe": -0.009928921655764977,
+        "max_mfe": -0.9399999999995998,
+        "sharpe": null,
+        "sortino": null,
+        "daily_observations": 0,
+        "risk_ratio_note": null,
+        "actionable_signals": -1425,
+        "total_signals": 0
+      },
+      "daily_marked_pnl": [
+        {
+          "date_utc": "2026-09-04",
+          "B_marked_pnl": -91.32065988893373,
+          "D_marked_pnl": -105.10301442955097,
+          "combined_minus_technical": -13.782354540617234
+        },
+        {
+          "date_utc": "2026-09-06",
+          "B_marked_pnl": -9.937198181489293,
+          "D_marked_pnl": -7.817565047449534,
+          "combined_minus_technical": 2.119633134039759
+        },
+        {
+          "date_utc": "2026-09-07",
+          "B_marked_pnl": -125.96816531513468,
+          "D_marked_pnl": -86.31496534079997,
+          "combined_minus_technical": 39.65319997433471
+        },
+        {
+          "date_utc": "2026-09-08",
+          "B_marked_pnl": -118.43746378554351,
+          "D_marked_pnl": -92.26152200349497,
+          "combined_minus_technical": 26.17594178204854
+        },
+        {
+          "date_utc": "2026-09-09",
+          "B_marked_pnl": -98.88613115410226,
+          "D_marked_pnl": -64.75571092369137,
+          "combined_minus_technical": 34.13042023041089
+        },
+        {
+          "date_utc": "2026-09-10",
+          "B_marked_pnl": -105.91515279245323,
+          "D_marked_pnl": -71.54195585642992,
+          "combined_minus_technical": 34.373196936023305
+        }
+      ],
+      "paired_block_resampling": {
+        "available": true,
+        "days": 6,
+        "block_length_represented_dates": 2,
+        "seed": 20260910,
+        "draws": 10000,
+        "valid_expectancy_draws": 10000,
+        "net_expectancy_delta_exploratory_95_interval": [
+          -0.1956519643013641,
+          -0.0034090494529820936
+        ],
+        "mean_daily_marked_pnl_delta_exploratory_95_interval": [
+          3.0745650492032532,
+          33.360316779866785
+        ],
+        "interpretation": "Descriptive paired circular-block resampling; too few test dates and reused history for reliable significance or fresh predictive-edge claims."
+      },
+      "five_minute_mean_signed_bps_per_common_opportunity_delta": -0.14776427253524577,
+      "expectancy_scope": "Difference of strategy means, not matched-trade treatment effect; each strategy has different entries/occupancy."
+    }
+  },
+  "parity": {
+    "original_training_result_without_forecasts_sha256": "a0436069716bcee98f00c30c4943749f3dcc3083fe8782b0dd2301621f98db42",
+    "original_training_match": true,
+    "original_test_match": true,
+    "original_test_forecast_matches": 6033,
+    "original_test_result_without_forecasts_sha256": "3b7147d2209f67d3e8f5c2d9be196225a4ff14a3627d1d38a61d98e7719a303e"
+  },
+  "control_identity": {
+    "train": {
+      "A_equals_D": true
+    },
+    "validation": {
+      "A_equals_D": true
+    },
+    "test": {
+      "A_equals_D": true
+    }
+  },
+  "real_data_prefix_checks": [
+    {
+      "bar_index": 299,
+      "A_B_C_prefix_invariant": true
+    },
+    {
+      "bar_index": 18101,
+      "A_B_C_prefix_invariant": true
+    },
+    {
+      "bar_index": 18102,
+      "A_B_C_prefix_invariant": true
+    },
+    {
+      "bar_index": 24135,
+      "A_B_C_prefix_invariant": true
+    },
+    {
+      "bar_index": 24136,
+      "A_B_C_prefix_invariant": true
+    },
+    {
+      "bar_index": 30168,
+      "A_B_C_prefix_invariant": true
+    }
+  ],
+  "production_source_preserved": true,
+  "database_rows_preserved": true,
+  "completed_utc": "2026-09-10T14:41:35.222051+00:00",
+  "conclusion": "Evidence is inconclusive for independent out-of-sample predictive value; report the observed sample effects separately."
+}

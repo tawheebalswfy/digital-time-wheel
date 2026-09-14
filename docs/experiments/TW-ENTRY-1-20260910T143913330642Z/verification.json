@@ -1,0 +1,86 @@
+{
+  "artifact_hashes_verified": 28,
+  "all_original_signal_hashes_verified": true,
+  "database_and_existing_source_preserved": true,
+  "checks": [
+    {
+      "segment": "train",
+      "arm": "A",
+      "signals_verified": 17992,
+      "trades_verified": 2180,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    },
+    {
+      "segment": "train",
+      "arm": "B",
+      "signals_verified": 17992,
+      "trades_verified": 3147,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    },
+    {
+      "segment": "train",
+      "arm": "C",
+      "signals_verified": 17992,
+      "trades_verified": 2991,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    },
+    {
+      "segment": "validation",
+      "arm": "A",
+      "signals_verified": 6002,
+      "trades_verified": 708,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    },
+    {
+      "segment": "validation",
+      "arm": "B",
+      "signals_verified": 6002,
+      "trades_verified": 1057,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    },
+    {
+      "segment": "validation",
+      "arm": "C",
+      "signals_verified": 6002,
+      "trades_verified": 974,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    },
+    {
+      "segment": "test",
+      "arm": "A",
+      "signals_verified": 6033,
+      "trades_verified": 717,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    },
+    {
+      "segment": "test",
+      "arm": "B",
+      "signals_verified": 6033,
+      "trades_verified": 1059,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    },
+    {
+      "segment": "test",
+      "arm": "C",
+      "signals_verified": 6033,
+      "trades_verified": 1011,
+      "hashes_metrics_bounds_and_nonoverlap": true
+    }
+  ],
+  "verifier_sha256": "b1fe4278e0cc19bfb88cbc252e9385e1a5e5c128f014b3f35408d744f868d0d1",
+  "research_unit_tests": {
+    "run": 8,
+    "passed": 8
+  },
+  "full_regression": {
+    "run": 45,
+    "passed": 43,
+    "failed": 1,
+    "errors": 1,
+    "failures": [
+      "test_websocket_same_client_replaced_once: active connection count 1 instead of 0",
+      "test_websocket_reconnect_cleans_up_and_does_not_poll: CancelledError"
+    ],
+    "note": "Previously documented WebSocket cleanup instability recurred; production transport unchanged."
+  }
+}

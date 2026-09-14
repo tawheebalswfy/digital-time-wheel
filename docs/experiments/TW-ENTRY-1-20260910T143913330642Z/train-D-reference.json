@@ -1,0 +1,7 @@
+{
+  "arm": "D",
+  "identical_to": "A",
+  "result_file": "train-A-result.json.gz",
+  "result_sha256": "9a1a11a89c6135ebee82ceecb7b3162676aac715c18db2283a2a7b46a271c64f",
+  "reason": "The existing baseline is already the existing combined strategy; do not count it as an independent trial."
+}
