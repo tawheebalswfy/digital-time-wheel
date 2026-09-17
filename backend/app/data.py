@@ -193,19 +193,32 @@ class MT5Adapter:
             result=self.mt5.order_send(request)
             if result is None:return {'accepted':False,'sent':True,'message':str(self.mt5.last_error())}
             retcode=int(getattr(result,'retcode',0));accepted=retcode in {getattr(self.mt5,'TRADE_RETCODE_DONE',10009),getattr(self.mt5,'TRADE_RETCODE_PLACED',10008)}
-            payload={'accepted':accepted,'sent':True,'retcode':retcode,'message':str(getattr(result,'comment','')),'ticket':int(getattr(result,'order',0)),'deal':int(getattr(result,'deal',0)),'actual_fill_price':float(getattr(result,'price',0))}
+            order_ticket=int(getattr(result,'order',0) or 0);deal_ticket=int(getattr(result,'deal',0) or 0)
+            payload={'accepted':accepted,'sent':True,'retcode':retcode,'message':str(getattr(result,'comment','')),
+                     'ticket':order_ticket,'deal':deal_ticket,
+                     'mt5_order_ticket':order_ticket or None,'mt5_deal_ticket_open':deal_ticket or None,
+                     'actual_fill_price':float(getattr(result,'price',0) or 0),'mt5_comment':request.get('comment'),
+                     'magic_number':request.get('magic'),'volume':request.get('volume')}
             if accepted:
                 try:
-                    direction='BUY' if request.get('type')==getattr(self.mt5,'ORDER_TYPE_BUY',-999) else 'SELL'
-                    candidates=[p for p in self.positions() if p.get('magic')==request.get('magic') and p.get('type')==direction and str(p.get('comment','')).startswith('DTW')]
-                    if candidates: payload['position_ticket']=candidates[-1]['ticket']
+                    # On hedging accounts order/deal/position are distinct.  A
+                    # returned deal is the strongest bridge to position_id.
+                    candidates=self.history_deals(max(0,time.time()-30))
+                    related=[d for d in candidates if (deal_ticket and d.get('ticket')==deal_ticket) or (order_ticket and d.get('order')==order_ticket)]
+                    opened=[d for d in related if d.get('entry') in (0,)]
+                    if opened:
+                        d=opened[-1]; payload.update({'mt5_position_ticket':d.get('position_id') or None,'position_ticket':d.get('position_id') or None,'open_time':datetime.fromtimestamp(d['time'],timezone.utc).isoformat(),'actual_fill_price':d.get('price') or payload['actual_fill_price'],'commission':d.get('commission'),'swap':d.get('swap')})
+                    else:
+                        direction='BUY' if request.get('type')==getattr(self.mt5,'ORDER_TYPE_BUY',-999) else 'SELL'
+                        candidates=[p for p in self.positions() if p.get('magic')==request.get('magic') and p.get('type')==direction and str(p.get('comment','')).startswith('DTW')]
+                        if candidates: payload.update({'position_ticket':candidates[-1]['ticket'],'mt5_position_ticket':candidates[-1]['ticket'],'open_time':datetime.fromtimestamp(candidates[-1]['time'],timezone.utc).isoformat() if candidates[-1].get('time') else None})
                 except Exception: pass
             return payload
     def history_deals(self,start_epoch):
         with self.lock:
             self.check(); from datetime import datetime,timedelta
             rows=self.mt5.history_deals_get(datetime.fromtimestamp(start_epoch,timezone.utc),datetime.now(timezone.utc)+timedelta(minutes=1)) or []
-            return [{'ticket':int(getattr(d,'ticket',0)),'order':int(getattr(d,'order',0)),'position_id':int(getattr(d,'position_id',0)),'type':int(getattr(d,'type',-1)),'entry':int(getattr(d,'entry',-1)),'time':int(normalize_broker_time(getattr(d,'time',0),self.timestamp_offset_seconds)),'price':float(getattr(d,'price',0)),'profit':float(getattr(d,'profit',0)),'reason':int(getattr(d,'reason',-1)),'volume':float(getattr(d,'volume',0)),'comment':str(getattr(d,'comment',''))} for d in rows]
+            return [{'ticket':int(getattr(d,'ticket',0)),'order':int(getattr(d,'order',0)),'position_id':int(getattr(d,'position_id',0)),'type':int(getattr(d,'type',-1)),'entry':int(getattr(d,'entry',-1)),'time':int(normalize_broker_time(getattr(d,'time',0),self.timestamp_offset_seconds)),'price':float(getattr(d,'price',0)),'profit':float(getattr(d,'profit',0)),'commission':float(getattr(d,'commission',0)),'swap':float(getattr(d,'swap',0)),'reason':int(getattr(d,'reason',-1)),'volume':float(getattr(d,'volume',0)),'comment':str(getattr(d,'comment',''))} for d in rows]
     def get_current_tick(self):
         with self.lock:
             self.check();self.tick_calls+=1;tick=self.mt5.symbol_info_tick(self.symbol)

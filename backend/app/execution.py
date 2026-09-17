@@ -29,14 +29,15 @@ class ExecutionController:
         live={int(p.get('ticket',0)):p for p in positions if p.get('magic')==self.magic and str(p.get('comment','')).startswith('DTW')}
         for row in self.db.execution_orders(500):
             if row['state']!='POSITION OPEN': continue
-            ticket=int(row.get('position_ticket') or (row.get('result') or {}).get('position_ticket') or 0)
+            ticket=int(row.get('mt5_position_ticket') or row.get('position_ticket') or (row.get('result') or {}).get('mt5_position_ticket') or (row.get('result') or {}).get('position_ticket') or 0)
             if ticket and ticket in live: continue
             try: deals=self.mt5.history_deals(datetime.fromisoformat(row['created_at']).timestamp())
             except Exception: continue
-            related=[d for d in deals if (ticket and d.get('position_id')==ticket) or d.get('order')==(row.get('result') or {}).get('ticket')]
+            result=row.get('result') or {}; order_ticket=result.get('mt5_order_ticket') or result.get('ticket'); deal_ticket=result.get('mt5_deal_ticket_open') or result.get('deal')
+            related=[d for d in deals if (ticket and d.get('position_id')==ticket) or (order_ticket and d.get('order')==order_ticket) or (deal_ticket and d.get('ticket')==deal_ticket)]
             exits=[d for d in related if d.get('entry') in (1,2)]
             if exits:
-                d=exits[-1]; self.db.close_execution(row['id'],{'close_timestamp':datetime.fromtimestamp(d['time'],timezone.utc).isoformat(),'close_price':d['price'],'realized_pnl':sum(x.get('profit',0) for x in exits),'close_reason':d.get('reason'),'deal_ticket':d.get('ticket'),'order_ticket':d.get('order'),'position_id':d.get('position_id')})
+                d=exits[-1]; self.db.close_execution(row['id'],{'close_timestamp':datetime.fromtimestamp(d['time'],timezone.utc).isoformat(),'close_price':d['price'],'realized_profit':sum(x.get('profit',0) for x in exits),'commission':sum(x.get('commission',0) for x in exits),'swap':sum(x.get('swap',0) for x in exits),'close_reason':d.get('reason'),'deal_ticket':d.get('ticket'),'order_ticket':d.get('order'),'position_id':d.get('position_id'),'mt5_deal_ticket_close':d.get('ticket'),'mt5_order_ticket_close':d.get('order')})
             elif ticket: self.db.mark_execution_sent(row['id'],{**(row.get('result') or {}),'position_missing':True},'POSITION UNKNOWN',sent=False)
     def enable(self):
         with self.lock:
@@ -74,9 +75,12 @@ class ExecutionController:
             try: request=self.preview(signal)
             except Exception as e:self.last_error='Order preflight: '+str(e);self.last_blocking_reason=self.last_error;return
             if self.settings.maximum_spread is not None and request['spread']>self.settings.maximum_spread:self.last_blocking_reason='Spread too high';return
+            # Compact deterministic broker comment; database remains authoritative.
+            request['comment']=f"DTW|{signal_id[:10]}|{signal['timeframe']}"[:31]
             payload={'timestamp':datetime.now(timezone.utc).isoformat(),'strategy_version':signal['strategy_version'],'signal_id':signal_id,'symbol':symbol,'timeframe':signal['timeframe'],'direction':signal['direction'],'confidence':signal['confidence'],'entry_price':request['price'],'requested_lot':self.settings.fixed_lot,'sl':request['sl'],'tp':request['tp'],'spread':request['spread'],'original_strategy_reasoning':signal.get('reasons',[]),'signal_timestamp':signal['timestamp'],'request':request}
             eid=self.db.reserve_execution(signal_id,payload,symbol,signal['timeframe'])
             if not eid:self.last_blocking_reason='Duplicate signal';return
+            self.db.update_execution_request(eid,request)
             account=self.mt5.execution_account()
             if not account['demo_confirmed'] or not account['algo_trading_available']:
                 self.db.mark_execution_sent(eid,{'sent':False,'reason':account['reason']},'EXECUTION_ERROR',sent=False);self.last_error='Order blocked: '+account['reason'];self.last_blocking_reason=self.last_error;return

@@ -29,6 +29,8 @@ runtime/
 *.sqlite
 *.sqlite3
 *.sqlite3-*
+ReportHistory-*.html
+ReportHistory-*.png
 
 # Packaging outputs and unpacked payloads
 dist-installer/

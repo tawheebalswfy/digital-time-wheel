@@ -33,10 +33,34 @@ class Database:
         if 'position_ticket' not in cols:self.conn.execute('ALTER TABLE execution_orders ADD COLUMN position_ticket INTEGER')
         if 'symbol' not in cols:self.conn.execute('ALTER TABLE execution_orders ADD COLUMN symbol TEXT')
         if 'timeframe' not in cols:self.conn.execute('ALTER TABLE execution_orders ADD COLUMN timeframe TEXT')
+        # Durable execution linkage.  Existing rows are preserved; values are
+        # backfilled only when the old payload/result explicitly contains them.
+        linkage_columns={
+            'candle_time':'INTEGER','direction':'TEXT','strategy_version':'TEXT',
+            'magic_number':'INTEGER','mt5_order_ticket':'INTEGER','mt5_deal_ticket_open':'INTEGER',
+            'mt5_position_ticket':'INTEGER','mt5_deal_ticket_close':'INTEGER','mt5_order_ticket_close':'INTEGER',
+            'mt5_comment':'TEXT','volume':'REAL','entry_price':'REAL','stop_loss':'REAL','take_profit':'REAL',
+            'open_time':'TEXT','close_time':'TEXT','realized_profit':'REAL','commission':'REAL','swap':'REAL',
+            'final_status':'TEXT'
+        }
+        for name,typ in linkage_columns.items():
+            if name not in cols:self.conn.execute(f'ALTER TABLE execution_orders ADD COLUMN {name} {typ}')
         self.conn.execute("UPDATE execution_orders SET symbol=COALESCE(json_extract(request_payload,'$.symbol'),json_extract(request_payload,'$.request.symbol')) WHERE symbol IS NULL")
         self.conn.execute("UPDATE execution_orders SET timeframe=COALESCE(json_extract(request_payload,'$.timeframe'),json_extract(request_payload,'$.request.timeframe')) WHERE timeframe IS NULL")
+        self.conn.execute("UPDATE execution_orders SET candle_time=COALESCE(candle_time,json_extract(request_payload,'$.signal_timestamp')) WHERE candle_time IS NULL")
+        self.conn.execute("UPDATE execution_orders SET direction=COALESCE(direction,json_extract(request_payload,'$.direction')) WHERE direction IS NULL")
+        self.conn.execute("UPDATE execution_orders SET strategy_version=COALESCE(strategy_version,json_extract(request_payload,'$.strategy_version')) WHERE strategy_version IS NULL")
+        self.conn.execute("UPDATE execution_orders SET magic_number=COALESCE(magic_number,json_extract(request_payload,'$.request.magic')) WHERE magic_number IS NULL")
+        self.conn.execute("UPDATE execution_orders SET mt5_order_ticket=COALESCE(mt5_order_ticket,json_extract(result_payload,'$.mt5_order_ticket'),json_extract(result_payload,'$.ticket')) WHERE mt5_order_ticket IS NULL")
+        self.conn.execute("UPDATE execution_orders SET mt5_deal_ticket_open=COALESCE(mt5_deal_ticket_open,json_extract(result_payload,'$.mt5_deal_ticket_open'),json_extract(result_payload,'$.deal')) WHERE mt5_deal_ticket_open IS NULL")
+        self.conn.execute("UPDATE execution_orders SET mt5_position_ticket=COALESCE(mt5_position_ticket,position_ticket,json_extract(result_payload,'$.mt5_position_ticket'),json_extract(result_payload,'$.position_ticket')) WHERE mt5_position_ticket IS NULL")
+        self.conn.execute("UPDATE execution_orders SET mt5_comment=COALESCE(mt5_comment,json_extract(request_payload,'$.request.comment')) WHERE mt5_comment IS NULL")
+        self.conn.execute("UPDATE execution_orders SET volume=COALESCE(volume,json_extract(request_payload,'$.request.volume')),entry_price=COALESCE(entry_price,json_extract(request_payload,'$.request.price')),stop_loss=COALESCE(stop_loss,json_extract(request_payload,'$.request.sl')),take_profit=COALESCE(take_profit,json_extract(request_payload,'$.request.tp')) WHERE volume IS NULL OR entry_price IS NULL OR stop_loss IS NULL OR take_profit IS NULL")
+        self.conn.execute("UPDATE execution_orders SET final_status=COALESCE(final_status,state) WHERE final_status IS NULL")
         self.conn.execute('CREATE INDEX IF NOT EXISTS idx_execution_orders_symbol ON execution_orders(symbol)')
         self.conn.execute('CREATE INDEX IF NOT EXISTS idx_execution_orders_symbol_timeframe ON execution_orders(symbol,timeframe)')
+        self.conn.execute('CREATE INDEX IF NOT EXISTS idx_execution_orders_signal_scope ON execution_orders(symbol,timeframe,signal_id)')
+        self.conn.execute('CREATE INDEX IF NOT EXISTS idx_execution_orders_mt5_position ON execution_orders(mt5_position_ticket)')
         for table in ['signals','signal_results','wheel_states','strategy_versions','candles','datasets','market_ticks','backtests','experiments']:
             for action in ['UPDATE','DELETE']:
                 self.conn.execute(f"CREATE TRIGGER IF NOT EXISTS immutable_{table}_{action} BEFORE {action} ON {table} BEGIN SELECT RAISE(ABORT,'immutable record'); END")
@@ -80,7 +104,9 @@ class Database:
             last=self.conn.execute('SELECT hash FROM signals ORDER BY seq DESC LIMIT 1').fetchone()
             previous=last[0] if last else '0'*64
             scope=f"{payload.get('symbol','UNKNOWN')}-{payload.get('timeframe','UNKNOWN')}"
-            sid=f"{scope}-{uuid.uuid4()}";created=now();encoded=canonical(payload)
+            # Stable identity: symbol/timeframe are in scope and the event key
+            # carries provider, dataset, strategy version and closed-candle time.
+            sid=f"{scope}-{digest({'event_key':key})[:24]}";created=now();encoded=canonical(payload)
             h=digest({'id':sid,'event_key':key,'created_at':created,'payload':payload,'previous_hash':previous})
             self.conn.execute('INSERT INTO signals(id,event_key,created_at,payload,previous_hash,hash) VALUES(?,?,?,?,?,?)',(sid,key,created,encoded,previous,h))
             self.conn.execute('INSERT INTO wheel_states VALUES(?,?)',(sid,canonical(payload['wheel'])))
@@ -136,14 +162,26 @@ class Database:
         eid=str(uuid.uuid4());created=now()
         with self.lock,self.conn:
             symbol=symbol or request.get('symbol') or request.get('request',{}).get('symbol'); timeframe=timeframe or request.get('timeframe') or request.get('request',{}).get('timeframe')
-            cur=self.conn.execute('INSERT OR IGNORE INTO execution_orders(id,signal_id,created_at,sent_at,state,request_payload,result_payload,close_payload,updated_at,symbol,timeframe) VALUES(?,?,?,?,?,?,?,?,?,?,?)',(eid,signal_id,created,None,'ORDER_PENDING',canonical(request),None,None,created,symbol,timeframe))
+            cur=self.conn.execute('INSERT OR IGNORE INTO execution_orders(id,signal_id,created_at,sent_at,state,request_payload,result_payload,close_payload,updated_at,symbol,timeframe,final_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',(eid,signal_id,created,None,'ORDER_PENDING',canonical(request),None,None,created,symbol,timeframe,'ORDER_PENDING'))
             return eid if cur.rowcount else None
     def mark_execution_sent(self,eid,result,state='EXECUTION_ERROR',sent=True):
-        with self.lock,self.conn:self.conn.execute('UPDATE execution_orders SET sent_at=CASE WHEN ? THEN ? ELSE sent_at END,state=?,result_payload=?,updated_at=? WHERE id=?',(sent,now(),state,canonical(result),now(),eid))
+        with self.lock,self.conn:
+            self.conn.execute('''UPDATE execution_orders SET sent_at=CASE WHEN ? THEN ? ELSE sent_at END,state=?,final_status=?,result_payload=?,
+                mt5_order_ticket=COALESCE(?,mt5_order_ticket),mt5_deal_ticket_open=COALESCE(?,mt5_deal_ticket_open),
+                mt5_position_ticket=COALESCE(?,mt5_position_ticket),entry_price=COALESCE(?,entry_price),open_time=COALESCE(?,open_time),
+                updated_at=? WHERE id=?''',(sent,now(),state,state,canonical(result),result.get('mt5_order_ticket',result.get('ticket')),result.get('mt5_deal_ticket_open',result.get('deal')),result.get('mt5_position_ticket',result.get('position_ticket')),result.get('actual_fill_price'),result.get('open_time'),now(),eid))
     def close_execution(self,eid,close):
-        with self.lock,self.conn:self.conn.execute('UPDATE execution_orders SET state=?,close_payload=?,updated_at=? WHERE id=?',('CLOSED',canonical(close),now(),eid))
+        with self.lock,self.conn:self.conn.execute('''UPDATE execution_orders SET state='CLOSED',final_status='CLOSED',close_payload=?,close_time=?,realized_profit=?,commission=?,swap=?,
+            mt5_deal_ticket_close=COALESCE(?,mt5_deal_ticket_close),mt5_order_ticket_close=COALESCE(?,mt5_order_ticket_close),updated_at=? WHERE id=?''',(canonical(close),close.get('close_timestamp'),close.get('realized_profit'),close.get('commission'),close.get('swap'),close.get('deal_ticket'),close.get('order_ticket'),now(),eid))
     def set_position_ticket(self,eid,ticket):
-        with self.lock,self.conn:self.conn.execute('UPDATE execution_orders SET position_ticket=?,updated_at=? WHERE id=?',(int(ticket),now(),eid))
+        with self.lock,self.conn:self.conn.execute('UPDATE execution_orders SET position_ticket=?,mt5_position_ticket=?,updated_at=? WHERE id=?',(int(ticket),int(ticket),now(),eid))
+    def update_execution_request(self,eid,request):
+        """Persist the exact broker request, including its durable comment."""
+        with self.lock,self.conn:
+            old=self.conn.execute('SELECT request_payload FROM execution_orders WHERE id=?',(eid,)).fetchone()
+            payload=json.loads(old[0]) if old and old[0] else {}
+            payload['request']=request
+            self.conn.execute('UPDATE execution_orders SET request_payload=?,mt5_comment=?,volume=?,entry_price=?,stop_loss=?,take_profit=?,updated_at=? WHERE id=?',(canonical(payload),request.get('comment'),request.get('volume'),request.get('price'),request.get('sl'),request.get('tp'),now(),eid))
     def execution_orders(self,limit=100,symbol=None,timeframe=None,status=None):
         filters=[];params=[]
         if symbol:filters.append('symbol=?');params.append(symbol)
