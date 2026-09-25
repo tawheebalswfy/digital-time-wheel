@@ -1,0 +1,1692 @@
+{
+  "research_only": true,
+  "symbol_requested": "XAUUSD",
+  "api_policy": "Only symbol_select/symbol_info and copy_rates APIs were called; no order API exists in this script.",
+  "started_utc": "2026-09-22T18:25:25.388578+00:00",
+  "initialized": true,
+  "terminal_connected": true,
+  "terminal_settings": {
+    "terminal_info_relevant_fields": {
+      "community_connection": true,
+      "connected": true,
+      "trade_allowed": true,
+      "tradeapi_disabled": false,
+      "build": 6182,
+      "maxbars": 100000,
+      "path": "C:\\Program Files\\MetaTrader 5 IC Markets Global",
+      "data_path": "C:\\Users\\PC\\AppData\\Roaming\\MetaQuotes\\Terminal\\010E047102812FC0C18890992854220E",
+      "commondata_path": "C:\\Users\\PC\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common"
+    },
+    "read_only_config_checks": [
+      {
+        "path": "C:\\Users\\PC\\AppData\\Roaming\\MetaQuotes\\Terminal\\010E047102812FC0C18890992854220E\\config\\terminal.ini",
+        "exists": true,
+        "readable": true,
+        "max_bar_lines": []
+      },
+      {
+        "path": "C:\\Users\\PC\\AppData\\Roaming\\MetaQuotes\\Terminal\\010E047102812FC0C18890992854220E\\config\\common.ini",
+        "exists": true,
+        "readable": true,
+        "max_bar_lines": []
+      },
+      {
+        "path": "C:\\Users\\PC\\AppData\\Roaming\\MetaQuotes\\Terminal\\010E047102812FC0C18890992854220E\\terminal.ini",
+        "exists": false,
+        "readable": false,
+        "max_bar_lines": []
+      },
+      {
+        "path": "C:\\Program Files\\MetaTrader 5 IC Markets Global\\config\\terminal.ini",
+        "exists": false,
+        "readable": false,
+        "max_bar_lines": []
+      },
+      {
+        "path": "C:\\Program Files\\MetaTrader 5 IC Markets Global\\config\\common.ini",
+        "exists": false,
+        "readable": false,
+        "max_bar_lines": []
+      },
+      {
+        "path": "C:\\Program Files\\MetaTrader 5 IC Markets Global\\terminal.ini",
+        "exists": false,
+        "readable": false,
+        "max_bar_lines": []
+      },
+      {
+        "path": "C:\\Users\\PC\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\config\\terminal.ini",
+        "exists": false,
+        "readable": false,
+        "max_bar_lines": []
+      },
+      {
+        "path": "C:\\Users\\PC\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\config\\common.ini",
+        "exists": false,
+        "readable": false,
+        "max_bar_lines": []
+      },
+      {
+        "path": "C:\\Users\\PC\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\terminal.ini",
+        "exists": false,
+        "readable": false,
+        "max_bar_lines": []
+      }
+    ]
+  },
+  "account": {
+    "server": "ICMarketsSC-Demo",
+    "login": 52960017,
+    "trade_mode": 0
+  },
+  "symbol_select": {
+    "requested": "XAUUSD",
+    "returned": true,
+    "last_error": [
+      1,
+      "Success"
+    ],
+    "visible": true,
+    "path": "Commodities\\Metals\\XAUUSD",
+    "description": "Gold vs US Dollar"
+  },
+  "timeframes": {
+    "M15": {
+      "mt5_timeframe_constant": 15,
+      "latest_position_probe": {
+        "api": "copy_rates_from_pos",
+        "args": [
+          "XAUUSD",
+          15,
+          0,
+          1
+        ],
+        "kwargs": {},
+        "started_utc": "2026-09-22T18:25:25.406260+00:00",
+        "returned_rows": 0,
+        "last_error": [
+          -1,
+          "Terminal: Call failed"
+        ]
+      },
+      "progressive_ranges": [
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-09-15T18:25:25.411683+00:00",
+            "2026-09-22T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.411683+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 7
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-08-23T18:25:25.411683+00:00",
+            "2026-09-22T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.422034+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 30
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-07-24T18:25:25.411683+00:00",
+            "2026-09-22T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.433306+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 60
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-06-24T18:25:25.411683+00:00",
+            "2026-09-22T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.445134+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 90
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-03-26T18:25:25.411683+00:00",
+            "2026-09-22T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.456394+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 180
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2025-09-22T18:25:25.411683+00:00",
+            "2026-09-22T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.466698+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 365
+        }
+      ],
+      "copy_rates_from": [
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-09-15T18:25:25.411683+00:00",
+            677
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.416560+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 7
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-08-23T18:25:25.411683+00:00",
+            2885
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.427447+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 30
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-07-24T18:25:25.411683+00:00",
+            5765
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.439702+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 60
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-06-24T18:25:25.411683+00:00",
+            8645
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.450001+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 90
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-03-26T18:25:25.411683+00:00",
+            17285
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.461822+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 180
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            15,
+            "2025-09-22T18:25:25.411683+00:00",
+            35045
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.472115+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 365
+        }
+      ],
+      "position_pages": [
+        {
+          "api": "copy_rates_from_pos",
+          "args": [
+            "XAUUSD",
+            15,
+            0,
+            1000
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.477533+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "page": 0
+        }
+      ],
+      "endpoint_source": "diagnostic runner UTC clock; latest-bar probe failed",
+      "latest_available_end_utc": "2026-09-22T18:25:25.411683+00:00",
+      "position_paged_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "chunked_365_day_attempts": [
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2025-09-22T18:25:25.411683+00:00",
+            "2025-10-22T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.483393+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2025-10-22T18:25:25.411683+00:00",
+            "2025-11-21T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.488811+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2025-11-21T18:25:25.411683+00:00",
+            "2025-12-21T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.494226+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2025-12-21T18:25:25.411683+00:00",
+            "2026-01-20T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.500085+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-01-20T18:25:25.411683+00:00",
+            "2026-02-19T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.505507+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-02-19T18:25:25.411683+00:00",
+            "2026-03-21T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.510966+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-03-21T18:25:25.411683+00:00",
+            "2026-04-20T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.516817+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-04-20T18:25:25.411683+00:00",
+            "2026-05-20T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.523302+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-05-20T18:25:25.411683+00:00",
+            "2026-06-19T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.528725+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-06-19T18:25:25.411683+00:00",
+            "2026-07-19T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.533604+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-07-19T18:25:25.411683+00:00",
+            "2026-08-18T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.539997+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-08-18T18:25:25.411683+00:00",
+            "2026-09-17T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.545415+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            15,
+            "2026-09-17T18:25:25.411683+00:00",
+            "2026-09-22T18:25:25.411683+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.550302+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        }
+      ],
+      "chunked_365_day_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "saved_direct_mt5_csv": null,
+      "saved_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "maximum_successful_range_days": 0
+    },
+    "M30": {
+      "mt5_timeframe_constant": 30,
+      "latest_position_probe": {
+        "api": "copy_rates_from_pos",
+        "args": [
+          "XAUUSD",
+          30,
+          0,
+          1
+        ],
+        "kwargs": {},
+        "started_utc": "2026-09-22T18:25:25.556694+00:00",
+        "returned_rows": 0,
+        "last_error": [
+          -1,
+          "Terminal: Call failed"
+        ]
+      },
+      "progressive_ranges": [
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-09-15T18:25:25.562113+00:00",
+            "2026-09-22T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.562113+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 7
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-08-23T18:25:25.562113+00:00",
+            "2026-09-22T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.574364+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 30
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-07-24T18:25:25.562113+00:00",
+            "2026-09-22T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.585216+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 60
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-06-24T18:25:25.562113+00:00",
+            "2026-09-22T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.596502+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 90
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-03-26T18:25:25.562113+00:00",
+            "2026-09-22T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.606807+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 180
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2025-09-22T18:25:25.562113+00:00",
+            "2026-09-22T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.618619+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 365
+        }
+      ],
+      "copy_rates_from": [
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-09-15T18:25:25.562113+00:00",
+            341
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.569492+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 7
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-08-23T18:25:25.562113+00:00",
+            1445
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.579797+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 30
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-07-24T18:25:25.562113+00:00",
+            2885
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.591081+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 60
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-06-24T18:25:25.562113+00:00",
+            4325
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.601919+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 90
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-03-26T18:25:25.562113+00:00",
+            8645
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.613201+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 180
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            30,
+            "2025-09-22T18:25:25.562113+00:00",
+            17525
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.623558+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 365
+        }
+      ],
+      "position_pages": [
+        {
+          "api": "copy_rates_from_pos",
+          "args": [
+            "XAUUSD",
+            30,
+            0,
+            1000
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.629962+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "page": 0
+        }
+      ],
+      "endpoint_source": "diagnostic runner UTC clock; latest-bar probe failed",
+      "latest_available_end_utc": "2026-09-22T18:25:25.562113+00:00",
+      "position_paged_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "chunked_365_day_attempts": [
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2025-09-22T18:25:25.562113+00:00",
+            "2025-10-22T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.638314+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2025-10-22T18:25:25.562113+00:00",
+            "2025-11-21T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.645679+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2025-11-21T18:25:25.562113+00:00",
+            "2025-12-21T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.654034+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2025-12-21T18:25:25.562113+00:00",
+            "2026-01-20T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.660418+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-01-20T18:25:25.562113+00:00",
+            "2026-02-19T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.667260+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-02-19T18:25:25.562113+00:00",
+            "2026-03-21T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.673655+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-03-21T18:25:25.562113+00:00",
+            "2026-04-20T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.679080+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-04-20T18:25:25.562113+00:00",
+            "2026-05-20T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.683960+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-05-20T18:25:25.562113+00:00",
+            "2026-06-19T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.689380+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-06-19T18:25:25.562113+00:00",
+            "2026-07-19T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.695778+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-07-19T18:25:25.562113+00:00",
+            "2026-08-18T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.702176+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-08-18T18:25:25.562113+00:00",
+            "2026-09-17T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.708041+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            30,
+            "2026-09-17T18:25:25.562113+00:00",
+            "2026-09-22T18:25:25.562113+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.713459+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        }
+      ],
+      "chunked_365_day_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "saved_direct_mt5_csv": null,
+      "saved_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "maximum_successful_range_days": 0
+    },
+    "H1": {
+      "mt5_timeframe_constant": 16385,
+      "latest_position_probe": {
+        "api": "copy_rates_from_pos",
+        "args": [
+          "XAUUSD",
+          16385,
+          0,
+          1
+        ],
+        "kwargs": {},
+        "started_utc": "2026-09-22T18:25:25.718880+00:00",
+        "returned_rows": 0,
+        "last_error": [
+          -1,
+          "Terminal: Call failed"
+        ]
+      },
+      "progressive_ranges": [
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-09-15T18:25:25.725798+00:00",
+            "2026-09-22T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.725798+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 7
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-08-23T18:25:25.725798+00:00",
+            "2026-09-22T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.737629+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 30
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-07-24T18:25:25.725798+00:00",
+            "2026-09-22T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.749886+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 60
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-06-24T18:25:25.725798+00:00",
+            "2026-09-22T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.761727+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 90
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-03-26T18:25:25.725798+00:00",
+            "2026-09-22T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.773990+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 180
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2025-09-22T18:25:25.725798+00:00",
+            "2026-09-22T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.786776+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 365
+        }
+      ],
+      "copy_rates_from": [
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-09-15T18:25:25.725798+00:00",
+            173
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.731223+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 7
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-08-23T18:25:25.725798+00:00",
+            725
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.742508+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 30
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-07-24T18:25:25.725798+00:00",
+            1445
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.755307+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 60
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-06-24T18:25:25.725798+00:00",
+            2165
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.767582+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 90
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-03-26T18:25:25.725798+00:00",
+            4325
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.781353+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 180
+        },
+        {
+          "api": "copy_rates_from",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2025-09-22T18:25:25.725798+00:00",
+            8765
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.792635+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "requested_days": 365
+        }
+      ],
+      "position_pages": [
+        {
+          "api": "copy_rates_from_pos",
+          "args": [
+            "XAUUSD",
+            16385,
+            0,
+            1000
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.799029+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "page": 0
+        }
+      ],
+      "endpoint_source": "diagnostic runner UTC clock; latest-bar probe failed",
+      "latest_available_end_utc": "2026-09-22T18:25:25.725798+00:00",
+      "position_paged_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "chunked_365_day_attempts": [
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2025-09-22T18:25:25.725798+00:00",
+            "2025-10-22T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.806403+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2025-10-22T18:25:25.725798+00:00",
+            "2025-11-21T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.810835+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2025-11-21T18:25:25.725798+00:00",
+            "2025-12-21T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.816698+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2025-12-21T18:25:25.725798+00:00",
+            "2026-01-20T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.824131+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-01-20T18:25:25.725798+00:00",
+            "2026-02-19T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.829551+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-02-19T18:25:25.725798+00:00",
+            "2026-03-21T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.836929+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-03-21T18:25:25.725798+00:00",
+            "2026-04-20T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.842793+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-04-20T18:25:25.725798+00:00",
+            "2026-05-20T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.847237+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-05-20T18:25:25.725798+00:00",
+            "2026-06-19T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.852643+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-06-19T18:25:25.725798+00:00",
+            "2026-07-19T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.858510+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-07-19T18:25:25.725798+00:00",
+            "2026-08-18T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.864913+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-08-18T18:25:25.725798+00:00",
+            "2026-09-17T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.870344+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        },
+        {
+          "api": "copy_rates_range",
+          "args": [
+            "XAUUSD",
+            16385,
+            "2026-09-17T18:25:25.725798+00:00",
+            "2026-09-22T18:25:25.725798+00:00"
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.875230+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        }
+      ],
+      "chunked_365_day_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "saved_direct_mt5_csv": null,
+      "saved_quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      },
+      "maximum_successful_range_days": 0
+    }
+  },
+  "lower_timeframe_probe": {
+    "M1": {
+      "position_pages": [
+        {
+          "api": "copy_rates_from_pos",
+          "args": [
+            "XAUUSD",
+            1,
+            0,
+            1000
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.880650+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "page": 0
+        }
+      ],
+      "quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      }
+    },
+    "M5": {
+      "position_pages": [
+        {
+          "api": "copy_rates_from_pos",
+          "args": [
+            "XAUUSD",
+            5,
+            0,
+            1000
+          ],
+          "kwargs": {},
+          "started_utc": "2026-09-22T18:25:25.886059+00:00",
+          "returned_rows": 0,
+          "last_error": [
+            -1,
+            "Terminal: Call failed"
+          ],
+          "page": 0
+        }
+      ],
+      "quality": {
+        "first_utc": null,
+        "last_utc": null,
+        "candles": 0,
+        "duplicates": 0,
+        "non_interval_gaps": 0,
+        "largest_gap_seconds": 0,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      }
+    }
+  },
+  "retained_mt5_fallback_export": {
+    "M15": {
+      "source": "retained database metadata: MT5",
+      "dataset_id": "9b42086946a9ceab1a8fde7c889d931cf6fddbde30e24436272c988f49796612",
+      "csv": "C:\\Users\\PC\\Documents\\Codex\\2026-09-09\\you-are-a-senior-quantitative-trading\\outputs\\digital-time-wheel-xau\\data\\history\\XAUUSD_M15_RETAINED_MT5_20260922T182525Z.csv",
+      "quality": {
+        "first_utc": "2026-08-11T14:15:00+00:00",
+        "last_utc": "2026-09-10T13:45:00+00:00",
+        "candles": 2013,
+        "duplicates": 0,
+        "non_interval_gaps": 22,
+        "largest_gap_seconds": 177300,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      }
+    },
+    "M30": {
+      "source": "retained database metadata: MT5",
+      "dataset_id": "bfebffa2ad1632deba070629e9ed28f91f6a4146072112fa11dc9ff12b05a988",
+      "csv": "C:\\Users\\PC\\Documents\\Codex\\2026-09-09\\you-are-a-senior-quantitative-trading\\outputs\\digital-time-wheel-xau\\data\\history\\XAUUSD_M30_RETAINED_MT5_20260922T182525Z.csv",
+      "quality": {
+        "first_utc": "2026-08-11T14:30:00+00:00",
+        "last_utc": "2026-09-10T13:30:00+00:00",
+        "candles": 1006,
+        "duplicates": 0,
+        "non_interval_gaps": 22,
+        "largest_gap_seconds": 178200,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      }
+    },
+    "H1": {
+      "source": "retained database metadata: MT5",
+      "dataset_id": "aa9dd4bc95536d041bec47fbbec7e6b317a0f1db6309c84629cbac792470ef43",
+      "csv": "C:\\Users\\PC\\Documents\\Codex\\2026-09-09\\you-are-a-senior-quantitative-trading\\outputs\\digital-time-wheel-xau\\data\\history\\XAUUSD_H1_RETAINED_MT5_20260922T182525Z.csv",
+      "quality": {
+        "first_utc": "2026-08-11T15:00:00+00:00",
+        "last_utc": "2026-09-10T13:00:00+00:00",
+        "candles": 503,
+        "duplicates": 0,
+        "non_interval_gaps": 22,
+        "largest_gap_seconds": 180000,
+        "monotonic_strict": true,
+        "invalid_ohlc": 0,
+        "zero_tick_volume": 0
+      }
+    }
+  },
+  "finished_utc": "2026-09-22T18:25:25.952416+00:00",
+  "shutdown_called": true
+}

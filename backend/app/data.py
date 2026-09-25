@@ -214,11 +214,16 @@ class MT5Adapter:
                         if candidates: payload.update({'position_ticket':candidates[-1]['ticket'],'mt5_position_ticket':candidates[-1]['ticket'],'open_time':datetime.fromtimestamp(candidates[-1]['time'],timezone.utc).isoformat() if candidates[-1].get('time') else None})
                 except Exception: pass
             return payload
-    def history_deals(self,start_epoch):
+    def history_deals(self,start_epoch,end_epoch=None):
         with self.lock:
             self.check(); from datetime import datetime,timedelta
-            rows=self.mt5.history_deals_get(datetime.fromtimestamp(start_epoch,timezone.utc),datetime.now(timezone.utc)+timedelta(minutes=1)) or []
-            return [{'ticket':int(getattr(d,'ticket',0)),'order':int(getattr(d,'order',0)),'position_id':int(getattr(d,'position_id',0)),'type':int(getattr(d,'type',-1)),'entry':int(getattr(d,'entry',-1)),'time':int(normalize_broker_time(getattr(d,'time',0),self.timestamp_offset_seconds)),'price':float(getattr(d,'price',0)),'profit':float(getattr(d,'profit',0)),'commission':float(getattr(d,'commission',0)),'swap':float(getattr(d,'swap',0)),'reason':int(getattr(d,'reason',-1)),'volume':float(getattr(d,'volume',0)),'comment':str(getattr(d,'comment',''))} for d in rows]
+            # MT5 history requests use the broker wall-clock range.  Convert
+            # our canonical UTC boundaries exactly once at this adapter edge.
+            end_epoch=time.time() if end_epoch is None else end_epoch
+            start=max(0,float(start_epoch));end=max(start,float(end_epoch))
+            offset=self.timestamp_offset_seconds
+            rows=self.mt5.history_deals_get(datetime.fromtimestamp(start+offset,timezone.utc),datetime.fromtimestamp(end+offset,timezone.utc)+timedelta(minutes=1)) or []
+            return [{'ticket':int(getattr(d,'ticket',0)),'order':int(getattr(d,'order',0)),'position_id':int(getattr(d,'position_id',0)),'type':int(getattr(d,'type',-1)),'entry':int(getattr(d,'entry',-1)),'time':int(normalize_broker_time(getattr(d,'time',0),offset)),'price':float(getattr(d,'price',0)),'profit':float(getattr(d,'profit',0)),'commission':float(getattr(d,'commission',0)),'swap':float(getattr(d,'swap',0)),'reason':int(getattr(d,'reason',-1)),'volume':float(getattr(d,'volume',0)),'symbol':str(getattr(d,'symbol','')),'magic':int(getattr(d,'magic',0) or 0),'comment':str(getattr(d,'comment',''))} for d in rows]
     def get_current_tick(self):
         with self.lock:
             self.check();self.tick_calls+=1;tick=self.mt5.symbol_info_tick(self.symbol)

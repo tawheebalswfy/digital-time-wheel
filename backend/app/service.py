@@ -86,6 +86,9 @@ class Service:
     def poll(self):
         with self.lock:
             self.poll_count+=1
+            # Lifecycle recovery is independent of auto-trading.  It only
+            # reads positions/history and is throttled by the controller.
+            if self.provider=='MT5':self.execution.reconcile_periodic()
             try:self._cache=self._collect()
             except (FeedError,ValueError) as e:
                 if self.provider=='MT5' and time.monotonic()>=self._next_reconnect:

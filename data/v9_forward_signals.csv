@@ -1,0 +1,1 @@
+signal_id,candidate,timeframe,signal_timestamp_utc,entry_timestamp_utc,direction,regime,entry_price,stop_price,target_price,risk,atr,adx,ema_fast,ema_slow,rsi,plus_di,minus_di,time_wheel_direction,time_wheel_confluence,created_utc

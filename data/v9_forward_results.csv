@@ -1,0 +1,1 @@
+signal_id,candidate,timeframe,direction,entry_timestamp_utc,exit_timestamp_utc,outcome,entry_price,exit_price,stop_price,target_price,holding_bars,holding_minutes,realized_r,realized_quote_pnl,mfe,mae,closed_utc

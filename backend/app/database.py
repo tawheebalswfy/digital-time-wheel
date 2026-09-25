@@ -1,7 +1,9 @@
 """SQLite append-only records with DB-enforced immutability and verifiable hash chain."""
-import hashlib,json,sqlite3,threading,uuid
+import hashlib,json,logging,sqlite3,threading,uuid
 from datetime import datetime,timezone
 from pathlib import Path
+
+logger=logging.getLogger(__name__)
 
 def canonical(obj):return json.dumps(obj,sort_keys=True,separators=(',',':'),allow_nan=False)
 def digest(obj):return hashlib.sha256(canonical(obj).encode()).hexdigest()
@@ -40,7 +42,7 @@ class Database:
             'magic_number':'INTEGER','mt5_order_ticket':'INTEGER','mt5_deal_ticket_open':'INTEGER',
             'mt5_position_ticket':'INTEGER','mt5_deal_ticket_close':'INTEGER','mt5_order_ticket_close':'INTEGER',
             'mt5_comment':'TEXT','volume':'REAL','entry_price':'REAL','stop_loss':'REAL','take_profit':'REAL',
-            'open_time':'TEXT','close_time':'TEXT','realized_profit':'REAL','commission':'REAL','swap':'REAL',
+            'open_time':'TEXT','close_time':'TEXT','close_price':'REAL','realized_profit':'REAL','commission':'REAL','swap':'REAL',
             'final_status':'TEXT'
         }
         for name,typ in linkage_columns.items():
@@ -162,7 +164,12 @@ class Database:
         eid=str(uuid.uuid4());created=now()
         with self.lock,self.conn:
             symbol=symbol or request.get('symbol') or request.get('request',{}).get('symbol'); timeframe=timeframe or request.get('timeframe') or request.get('request',{}).get('timeframe')
-            cur=self.conn.execute('INSERT OR IGNORE INTO execution_orders(id,signal_id,created_at,sent_at,state,request_payload,result_payload,close_payload,updated_at,symbol,timeframe,final_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',(eid,signal_id,created,None,'ORDER_PENDING',canonical(request),None,None,created,symbol,timeframe,'ORDER_PENDING'))
+            broker_request=request.get('request') or {}
+            cur=self.conn.execute('''INSERT OR IGNORE INTO execution_orders(
+                id,signal_id,created_at,sent_at,state,request_payload,result_payload,close_payload,updated_at,
+                symbol,timeframe,candle_time,direction,strategy_version,magic_number,mt5_comment,volume,entry_price,stop_loss,take_profit,final_status
+                ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',(eid,signal_id,created,None,'ORDER_PENDING',canonical(request),None,None,created,
+                symbol,timeframe,request.get('signal_timestamp'),request.get('direction'),request.get('strategy_version'),broker_request.get('magic'),broker_request.get('comment'),broker_request.get('volume'),request.get('entry_price',broker_request.get('price')),broker_request.get('sl'),broker_request.get('tp'),'ORDER_PENDING'))
             return eid if cur.rowcount else None
     def mark_execution_sent(self,eid,result,state='EXECUTION_ERROR',sent=True):
         with self.lock,self.conn:
@@ -171,8 +178,33 @@ class Database:
                 mt5_position_ticket=COALESCE(?,mt5_position_ticket),entry_price=COALESCE(?,entry_price),open_time=COALESCE(?,open_time),
                 updated_at=? WHERE id=?''',(sent,now(),state,state,canonical(result),result.get('mt5_order_ticket',result.get('ticket')),result.get('mt5_deal_ticket_open',result.get('deal')),result.get('mt5_position_ticket',result.get('position_ticket')),result.get('actual_fill_price'),result.get('open_time'),now(),eid))
     def close_execution(self,eid,close):
-        with self.lock,self.conn:self.conn.execute('''UPDATE execution_orders SET state='CLOSED',final_status='CLOSED',close_payload=?,close_time=?,realized_profit=?,commission=?,swap=?,
-            mt5_deal_ticket_close=COALESCE(?,mt5_deal_ticket_close),mt5_order_ticket_close=COALESCE(?,mt5_order_ticket_close),updated_at=? WHERE id=?''',(canonical(close),close.get('close_timestamp'),close.get('realized_profit'),close.get('commission'),close.get('swap'),close.get('deal_ticket'),close.get('order_ticket'),now(),eid))
+        """Finalize one original execution after a ticket-proven MT5 close.
+
+        Both timestamps are canonical UTC ISO strings.  A malformed or
+        backwards close is rejected rather than silently corrupting lifecycle
+        evidence.  Callers leave the execution unresolved and may retry later.
+        """
+        close_time=close.get('close_timestamp')
+        try: close_dt=datetime.fromisoformat(close_time) if close_time else None
+        except (TypeError,ValueError):
+            logger.warning('Rejecting close for execution %s: invalid close timestamp %r',eid,close_time);return False
+        if close_dt and close_dt.tzinfo is None:
+            logger.warning('Rejecting close for execution %s: naive close timestamp',eid);return False
+        with self.lock,self.conn:
+            row=self.conn.execute('SELECT open_time FROM execution_orders WHERE id=?',(eid,)).fetchone()
+            if not row:return False
+            if row['open_time'] and close_dt:
+                try: open_dt=datetime.fromisoformat(row['open_time'])
+                except ValueError:
+                    logger.warning('Rejecting close for execution %s: invalid persisted open timestamp',eid);return False
+                if open_dt.tzinfo is None or close_dt.astimezone(timezone.utc)<open_dt.astimezone(timezone.utc):
+                    logger.warning('Rejecting close for execution %s: close_time precedes open_time',eid);return False
+            self.conn.execute('''UPDATE execution_orders SET state='CLOSED',final_status='CLOSED',close_payload=?,close_time=?,close_price=?,realized_profit=?,commission=?,swap=?,
+                mt5_deal_ticket_close=COALESCE(?,mt5_deal_ticket_close),mt5_order_ticket_close=COALESCE(?,mt5_order_ticket_close),updated_at=? WHERE id=?''',(canonical(close),close_time,close.get('close_price'),close.get('realized_profit'),close.get('commission'),close.get('swap'),close.get('deal_ticket'),close.get('order_ticket'),now(),eid))
+        return True
+    def set_execution_state(self,eid,state):
+        if state not in {'POSITION OPEN','POSITION UNKNOWN'}:raise ValueError('Invalid nonfinal execution state')
+        with self.lock,self.conn:self.conn.execute('UPDATE execution_orders SET state=?,final_status=?,updated_at=? WHERE id=?',(state,state,now(),eid))
     def set_position_ticket(self,eid,ticket):
         with self.lock,self.conn:self.conn.execute('UPDATE execution_orders SET position_ticket=?,mt5_position_ticket=?,updated_at=? WHERE id=?',(int(ticket),int(ticket),now(),eid))
     def update_execution_request(self,eid,request):

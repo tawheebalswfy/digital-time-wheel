@@ -1,16 +1,19 @@
 """Conservative, backend-only MT5 demo execution around immutable strategy signals."""
-import threading,time
+import logging,threading,time
 from datetime import datetime,timezone
 from .data import FeedError
 from .config import ExecutionSettings
 
 class ExecutionController:
     magic=20260910
+    close_entries={1,2,3} # DEAL_ENTRY_OUT, DEAL_ENTRY_INOUT, DEAL_ENTRY_OUT_BY
+    history_max_seconds=7*24*60*60
+    reconcile_interval_seconds=30
     def __init__(self,db,mt5):
         self.db=db;self.mt5=mt5;self.lock=threading.RLock();self.enabled=False;self.last_error=None;self.last_blocking_reason='Auto trading disabled'
         saved=db.execution_config() or {}
         if 'timeframe' in saved and 'selected_timeframes' not in saved:saved['selected_timeframes']=[saved.pop('timeframe')]
-        self.settings=ExecutionSettings(**saved)
+        self.settings=ExecutionSettings(**saved);self._last_reconcile_monotonic=0.0
     def save_settings(self,settings):
         with self.lock:self.settings=settings;self.db.save_execution_config(settings.model_dump());return self.status()
     def status(self):
@@ -24,21 +27,56 @@ class ExecutionController:
         symbol=getattr(self.mt5,'symbol',None)
         return {'state':state,'enabled':self.enabled,**self.settings.model_dump(),'execution_timeframes':self.settings.selected_timeframes,'daily_sent_trades':self.db.daily_sent_count(symbol),'account':account,'open_positions':positions,'owned_positions':owned,'external_positions':external,'last_error':self.last_error,'blocking_reason':self.last_blocking_reason,'last_executed_signal':(self.db.execution_orders(1,symbol) or [None])[0]}
     def reconcile(self,positions=None):
-        """Reconcile durable records against live positions and MT5 deal history."""
+        """Bounded, ticket-first close reconciliation; it never sends orders."""
         positions=positions if positions is not None else self.mt5.positions()
-        live={int(p.get('ticket',0)):p for p in positions if p.get('magic')==self.magic and str(p.get('comment','')).startswith('DTW')}
+        live={}
+        for p in positions:
+            if p.get('magic')==self.magic and str(p.get('comment','')).startswith('DTW'):
+                for key in ('ticket','identifier'):
+                    if p.get(key):live[int(p[key])]=p
+        candidates=[]
         for row in self.db.execution_orders(500):
-            if row['state']!='POSITION OPEN': continue
-            ticket=int(row.get('mt5_position_ticket') or row.get('position_ticket') or (row.get('result') or {}).get('mt5_position_ticket') or (row.get('result') or {}).get('position_ticket') or 0)
-            if ticket and ticket in live: continue
-            try: deals=self.mt5.history_deals(datetime.fromisoformat(row['created_at']).timestamp())
-            except Exception: continue
-            result=row.get('result') or {}; order_ticket=result.get('mt5_order_ticket') or result.get('ticket'); deal_ticket=result.get('mt5_deal_ticket_open') or result.get('deal')
-            related=[d for d in deals if (ticket and d.get('position_id')==ticket) or (order_ticket and d.get('order')==order_ticket) or (deal_ticket and d.get('ticket')==deal_ticket)]
-            exits=[d for d in related if d.get('entry') in (1,2)]
+            if row['state'] not in {'POSITION OPEN','POSITION UNKNOWN'}:continue
+            if not str(row.get('mt5_comment') or '').startswith('DTW'):continue
+            ticket=int(row.get('mt5_position_ticket') or row.get('position_ticket') or 0)
+            if not ticket:continue
+            if ticket in live:
+                if row['state']!='POSITION OPEN':self.db.set_execution_state(row['id'],'POSITION OPEN')
+                continue
+            candidates.append((row,ticket))
+        if not candidates:return
+        now_epoch=time.time();starts=[]
+        for row,_ in candidates:
+            try: starts.append(datetime.fromisoformat(row.get('open_time') or row['created_at']).timestamp())
+            except (TypeError,ValueError): starts.append(now_epoch-self.history_max_seconds)
+        try: deals=self.mt5.history_deals(max(now_epoch-self.history_max_seconds,min(starts)),now_epoch)
+        except Exception as e:
+            self.last_error=f'Close reconciliation history lookup failed: {e}';return
+        for row,ticket in candidates:
+            related=[d for d in deals if int(d.get('position_id') or 0)==ticket and self._deal_belongs_to_execution(d,row)]
+            exits=[d for d in related if int(d.get('entry',-1)) in self.close_entries]
             if exits:
-                d=exits[-1]; self.db.close_execution(row['id'],{'close_timestamp':datetime.fromtimestamp(d['time'],timezone.utc).isoformat(),'close_price':d['price'],'realized_profit':sum(x.get('profit',0) for x in exits),'commission':sum(x.get('commission',0) for x in exits),'swap':sum(x.get('swap',0) for x in exits),'close_reason':d.get('reason'),'deal_ticket':d.get('ticket'),'order_ticket':d.get('order'),'position_id':d.get('position_id'),'mt5_deal_ticket_close':d.get('ticket'),'mt5_order_ticket_close':d.get('order')})
-            elif ticket: self.db.mark_execution_sent(row['id'],{**(row.get('result') or {}),'position_missing':True},'POSITION UNKNOWN',sent=False)
+                d=max(exits,key=lambda item:item.get('time',0))
+                # Profit is close-deal profit. Costs are position costs across
+                # each linked deal, so opening commission is included once.
+                closed=self.db.close_execution(row['id'],{'close_timestamp':datetime.fromtimestamp(d['time'],timezone.utc).isoformat(),'close_price':d.get('price'),'realized_profit':sum(float(x.get('profit') or 0) for x in exits),'commission':sum(float(x.get('commission') or 0) for x in related),'swap':sum(float(x.get('swap') or 0) for x in related),'close_reason':d.get('reason'),'deal_ticket':d.get('ticket'),'order_ticket':d.get('order'),'position_id':ticket})
+                if not closed: logging.getLogger(__name__).warning('Close linkage found but timestamp validation rejected execution %s',row['id'])
+            else:self.db.set_execution_state(row['id'],'POSITION UNKNOWN')
+    def reconcile_periodic(self):
+        """Run bounded recovery at most once per interval while the backend runs."""
+        current=time.monotonic()
+        if current-self._last_reconcile_monotonic<self.reconcile_interval_seconds:return
+        self._last_reconcile_monotonic=current
+        try:self.reconcile()
+        except Exception as e:self.last_error=f'Close reconciliation failed: {e}'
+    def _deal_belongs_to_execution(self,deal,row):
+        """Additional ownership checks after exact DEAL_POSITION_ID linkage."""
+        if deal.get('symbol') and row.get('symbol') and deal['symbol']!=row['symbol']:return False
+        row_magic=row.get('magic_number')
+        if row_magic is not None and deal.get('magic') not in (None,0,int(row_magic)):return False
+        volume=row.get('volume')
+        if volume is not None and deal.get('volume') and float(deal['volume'])>float(volume)+1e-9:return False
+        return True
     def enable(self):
         with self.lock:
             account=self.mt5.execution_account()

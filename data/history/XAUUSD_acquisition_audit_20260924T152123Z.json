@@ -1,0 +1,559 @@
+{
+  "symbol": "XAUUSD",
+  "read_only": true,
+  "api_policy": "Uses only symbol_select, terminal_info, symbol_info, and copy_rates_from_pos; no order API is imported or called.",
+  "timeframes": {
+    "M1": {
+      "depth_probe": [
+        {
+          "requested_bars": 1000,
+          "returned_bars": 1000,
+          "first_utc": "2026-09-24T01:42:00+00:00",
+          "last_utc": "2026-09-24T18:21:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 5000,
+          "returned_bars": 5000,
+          "first_utc": "2026-09-21T03:53:00+00:00",
+          "last_utc": "2026-09-24T18:21:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 10000,
+          "returned_bars": 10000,
+          "first_utc": "2026-09-15T12:19:00+00:00",
+          "last_utc": "2026-09-24T18:21:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 25000,
+          "returned_bars": 25000,
+          "first_utc": "2026-08-31T12:19:00+00:00",
+          "last_utc": "2026-09-24T18:21:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2026-08-05T09:13:00+00:00",
+          "last_utc": "2026-09-24T18:21:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 100000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -2,
+            "Terminal: Invalid params"
+          ]
+        }
+      ],
+      "pagination": [
+        {
+          "position": 0,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2026-08-05T09:13:00+00:00",
+          "last_utc": "2026-09-24T18:21:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 50000,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2026-06-15T16:00:00+00:00",
+          "last_utc": "2026-08-05T09:12:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 100000,
+          "requested_bars": 50000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        }
+      ],
+      "source": "DIRECT_MT5",
+      "quality": {
+        "first_utc": "2026-06-15T16:00:00+00:00",
+        "last_utc": "2026-09-24T18:21:00+00:00",
+        "total_candles": 100000,
+        "duplicates": 0,
+        "invalid_ohlc_rows": 0,
+        "zero_or_invalid_volume_rows": 0,
+        "gap_count": 78,
+        "longest_gap_seconds": 190860,
+        "monotonic_timestamp_check": true
+      },
+      "saved_path": "C:\\Users\\PC\\Documents\\Codex\\2026-09-09\\you-are-a-senior-quantitative-trading\\outputs\\digital-time-wheel-xau\\data\\history\\XAUUSD_M1.csv"
+    },
+    "M5": {
+      "depth_probe": [
+        {
+          "requested_bars": 1000,
+          "returned_bars": 1000,
+          "first_utc": "2026-09-21T04:05:00+00:00",
+          "last_utc": "2026-09-24T18:20:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 5000,
+          "returned_bars": 5000,
+          "first_utc": "2026-08-31T13:15:00+00:00",
+          "last_utc": "2026-09-24T18:20:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 10000,
+          "returned_bars": 10000,
+          "first_utc": "2026-08-05T10:35:00+00:00",
+          "last_utc": "2026-09-24T18:20:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 25000,
+          "returned_bars": 25000,
+          "first_utc": "2026-05-20T12:40:00+00:00",
+          "last_utc": "2026-09-24T18:20:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2026-01-12T15:00:00+00:00",
+          "last_utc": "2026-09-24T18:20:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 100000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -2,
+            "Terminal: Invalid params"
+          ]
+        }
+      ],
+      "pagination": [
+        {
+          "position": 0,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2026-01-12T15:00:00+00:00",
+          "last_utc": "2026-09-24T18:20:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 50000,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2025-04-29T14:25:00+00:00",
+          "last_utc": "2026-01-12T14:55:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 100000,
+          "requested_bars": 50000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        }
+      ],
+      "source": "DIRECT_MT5",
+      "quality": {
+        "first_utc": "2025-04-29T14:25:00+00:00",
+        "last_utc": "2026-09-24T18:20:00+00:00",
+        "total_candles": 100000,
+        "duplicates": 0,
+        "invalid_ohlc_rows": 0,
+        "zero_or_invalid_volume_rows": 0,
+        "gap_count": 372,
+        "longest_gap_seconds": 263100,
+        "monotonic_timestamp_check": true
+      },
+      "saved_path": "C:\\Users\\PC\\Documents\\Codex\\2026-09-09\\you-are-a-senior-quantitative-trading\\outputs\\digital-time-wheel-xau\\data\\history\\XAUUSD_M5.csv"
+    },
+    "M15": {
+      "depth_probe": [
+        {
+          "requested_bars": 1000,
+          "returned_bars": 1000,
+          "first_utc": "2026-09-09T21:30:00+00:00",
+          "last_utc": "2026-09-24T18:15:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 5000,
+          "returned_bars": 5000,
+          "first_utc": "2026-07-10T08:00:00+00:00",
+          "last_utc": "2026-09-24T18:15:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 10000,
+          "returned_bars": 10000,
+          "first_utc": "2026-04-24T10:30:00+00:00",
+          "last_utc": "2026-09-24T18:15:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 25000,
+          "returned_bars": 25000,
+          "first_utc": "2025-09-03T17:45:00+00:00",
+          "last_utc": "2026-09-24T18:15:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2024-08-13T19:45:00+00:00",
+          "last_utc": "2026-09-24T18:15:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 100000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -2,
+            "Terminal: Invalid params"
+          ]
+        }
+      ],
+      "pagination": [
+        {
+          "position": 0,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2024-08-13T19:45:00+00:00",
+          "last_utc": "2026-09-24T18:15:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 50000,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2022-07-04T10:00:00+00:00",
+          "last_utc": "2024-08-13T19:30:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 100000,
+          "requested_bars": 50000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        }
+      ],
+      "source": "DIRECT_MT5",
+      "quality": {
+        "first_utc": "2022-07-04T10:00:00+00:00",
+        "last_utc": "2026-09-24T18:15:00+00:00",
+        "total_candles": 100000,
+        "duplicates": 0,
+        "invalid_ohlc_rows": 0,
+        "zero_or_invalid_volume_rows": 0,
+        "gap_count": 1097,
+        "longest_gap_seconds": 263700,
+        "monotonic_timestamp_check": true
+      },
+      "saved_path": "C:\\Users\\PC\\Documents\\Codex\\2026-09-09\\you-are-a-senior-quantitative-trading\\outputs\\digital-time-wheel-xau\\data\\history\\XAUUSD_M15.csv"
+    },
+    "M30": {
+      "depth_probe": [
+        {
+          "requested_bars": 1000,
+          "returned_bars": 1000,
+          "first_utc": "2026-08-25T22:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 5000,
+          "returned_bars": 5000,
+          "first_utc": "2026-04-24T11:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 10000,
+          "returned_bars": 10000,
+          "first_utc": "2025-11-19T04:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 25000,
+          "returned_bars": 25000,
+          "first_utc": "2024-08-13T21:30:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2022-07-04T14:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 100000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -2,
+            "Terminal: Invalid params"
+          ]
+        }
+      ],
+      "pagination": [
+        {
+          "position": 0,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2022-07-04T14:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 50000,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2018-04-11T04:00:00+00:00",
+          "last_utc": "2022-07-04T13:30:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 100000,
+          "requested_bars": 50000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -1,
+            "Terminal: Call failed"
+          ]
+        }
+      ],
+      "source": "DIRECT_MT5",
+      "quality": {
+        "first_utc": "2018-04-11T04:00:00+00:00",
+        "last_utc": "2026-09-24T18:00:00+00:00",
+        "total_candles": 100000,
+        "duplicates": 0,
+        "invalid_ohlc_rows": 0,
+        "zero_or_invalid_volume_rows": 0,
+        "gap_count": 2188,
+        "longest_gap_seconds": 275400,
+        "monotonic_timestamp_check": true
+      },
+      "saved_path": "C:\\Users\\PC\\Documents\\Codex\\2026-09-09\\you-are-a-senior-quantitative-trading\\outputs\\digital-time-wheel-xau\\data\\history\\XAUUSD_M30.csv"
+    },
+    "H1": {
+      "depth_probe": [
+        {
+          "requested_bars": 1000,
+          "returned_bars": 1000,
+          "first_utc": "2026-07-27T06:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 5000,
+          "returned_bars": 5000,
+          "first_utc": "2025-11-19T09:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 10000,
+          "returned_bars": 10000,
+          "first_utc": "2025-01-16T09:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 25000,
+          "returned_bars": 25000,
+          "first_utc": "2022-07-05T08:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2018-04-12T05:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "requested_bars": 100000,
+          "returned_bars": 0,
+          "first_utc": null,
+          "last_utc": null,
+          "mt5_last_error": [
+            -2,
+            "Terminal: Invalid params"
+          ]
+        }
+      ],
+      "pagination": [
+        {
+          "position": 0,
+          "requested_bars": 50000,
+          "returned_bars": 50000,
+          "first_utc": "2018-04-12T05:00:00+00:00",
+          "last_utc": "2026-09-24T18:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        },
+        {
+          "position": 50000,
+          "requested_bars": 50000,
+          "returned_bars": 18118,
+          "first_utc": "1998-04-22T00:00:00+00:00",
+          "last_utc": "2018-04-12T04:00:00+00:00",
+          "mt5_last_error": [
+            1,
+            "Success"
+          ]
+        }
+      ],
+      "source": "DIRECT_MT5",
+      "quality": {
+        "first_utc": "1998-04-22T00:00:00+00:00",
+        "last_utc": "2026-09-24T18:00:00+00:00",
+        "total_candles": 68118,
+        "duplicates": 0,
+        "invalid_ohlc_rows": 0,
+        "zero_or_invalid_volume_rows": 0,
+        "gap_count": 7683,
+        "longest_gap_seconds": 345600,
+        "monotonic_timestamp_check": true
+      },
+      "saved_path": "C:\\Users\\PC\\Documents\\Codex\\2026-09-09\\you-are-a-senior-quantitative-trading\\outputs\\digital-time-wheel-xau\\data\\history\\XAUUSD_H1.csv"
+    }
+  },
+  "terminal_connected": true,
+  "server": "ICMarketsSC-Demo",
+  "symbol_selected": true
+}
