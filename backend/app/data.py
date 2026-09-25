@@ -7,6 +7,34 @@ from .time_normalization import normalize_broker_time,timestamp_audit,validate_n
 
 class FeedError(RuntimeError):pass
 
+def normalize_order_price(value,tick_size,digits):
+    """Normalize only to the broker price grid; never widen an SL/TP distance."""
+    value=float(value); tick_size=float(tick_size)
+    if not math.isfinite(value) or value<=0:raise ValueError('Strategy price must be finite and positive')
+    if not math.isfinite(tick_size) or tick_size<=0:raise ValueError('Broker tick size is invalid')
+    return round(round(value/tick_size)*tick_size,int(digits))
+
+def preflight_sl_tp(direction,entry,bid,ask,sl,tp,minimum_distance):
+    """Return every failed directional/broker-level condition for a market order.
+
+    MT5 evaluates BUY protective levels against Bid and SELL protective levels
+    against Ask.  Directional checks remain relative to the executable entry.
+    """
+    values={'entry':entry,'bid':bid,'ask':ask,'sl':sl,'tp':tp,'minimum_distance':minimum_distance}
+    failures=[f'{k}_not_finite_positive' for k,v in values.items() if not math.isfinite(float(v)) or float(v)<=0]
+    if direction not in ('BUY','SELL'):failures.append('unsupported_direction')
+    if not failures:
+        if direction=='BUY':
+            checks={'buy_sl_not_below_entry':sl>=entry,'buy_tp_not_above_entry':tp<=entry,
+                    'buy_sl_inside_broker_minimum':sl>bid-minimum_distance,
+                    'buy_tp_inside_broker_minimum':tp<bid+minimum_distance}
+        else:
+            checks={'sell_sl_not_above_entry':sl<=entry,'sell_tp_not_below_entry':tp>=entry,
+                    'sell_sl_inside_broker_minimum':sl<ask+minimum_distance,
+                    'sell_tp_inside_broker_minimum':tp>ask-minimum_distance}
+        failures.extend(name for name,failed in checks.items() if failed)
+    return failures
+
 class MarketAdapter(Protocol):
     def get_current_tick(self):...
     def get_rates(self,timeframe,count=500):...
@@ -74,13 +102,13 @@ class CSVAdapter:
 class MT5Adapter:
     def __init__(self):
         self.mt5=None;self.symbol=None;self.lock=threading.RLock();self.connected=False;self.timestamp_offset_seconds=0
-        self.initialize_calls=0;self.shutdown_calls=0;self.tick_calls=0;self.rate_calls=0;self.last_tick_debug={};self.terminal_path=None;self.last_reconnect_reason=None;self.reconnect_attempts=0
+        self.initialize_calls=0;self.shutdown_calls=0;self.tick_calls=0;self.rate_calls=0;self.last_tick_debug={};self.last_preflight_debug={};self.terminal_path=None;self.last_reconnect_reason=None;self.reconnect_attempts=0;self.stale_quote_count=0;self.last_stale_quote_at=None;self.last_refresh_attempt_at=None;self.refresh_backoff_seconds=0;self.session_health_reason='not_connected'
     def diagnostics(self):
         try: terminal=self.mt5.terminal_info() if self.connected and self.mt5 else None
         except Exception: terminal=None
         try: account=self.mt5.account_info() if self.connected and self.mt5 else None
         except Exception: account=None
-        return {'connected':self.connected,'symbol':self.symbol,'terminal_path':getattr(terminal,'path',None) or self.terminal_path,'terminal_build':getattr(terminal,'build',None),'account_login':getattr(account,'login',None),'account_server':getattr(account,'server',None),'account_mode':getattr(account,'trade_mode',None),'algo_trading_available':bool(getattr(terminal,'trade_allowed',False) and not getattr(terminal,'tradeapi_disabled',True) and getattr(account,'trade_expert',False)) if terminal and account else False,'initialize_calls':self.initialize_calls,'shutdown_calls':self.shutdown_calls,'reconnect_attempts':self.reconnect_attempts,'last_reconnect_reason':self.last_reconnect_reason,'tick_calls':self.tick_calls,'rate_calls':self.rate_calls,'timestamp_offset_seconds':self.timestamp_offset_seconds,'last_tick':self.last_tick_debug.copy()}
+        return {'connected':self.connected,'symbol':self.symbol,'terminal_path':getattr(terminal,'path',None) or self.terminal_path,'terminal_build':getattr(terminal,'build',None),'account_login':getattr(account,'login',None),'account_server':getattr(account,'server',None),'account_mode':getattr(account,'trade_mode',None),'algo_trading_available':bool(getattr(terminal,'trade_allowed',False) and not getattr(terminal,'tradeapi_disabled',True) and getattr(account,'trade_expert',False)) if terminal and account else False,'initialize_calls':self.initialize_calls,'shutdown_calls':self.shutdown_calls,'reconnect_attempts':self.reconnect_attempts,'last_reconnect_reason':self.last_reconnect_reason,'stale_quote_count':self.stale_quote_count,'last_stale_quote_at':self.last_stale_quote_at,'last_refresh_attempt_at':self.last_refresh_attempt_at,'refresh_backoff_seconds':self.refresh_backoff_seconds,'session_health_reason':self.session_health_reason,'tick_calls':self.tick_calls,'rate_calls':self.rate_calls,'timestamp_offset_seconds':self.timestamp_offset_seconds,'last_tick':self.last_tick_debug.copy(),'last_preflight':self.last_preflight_debug.copy()}
     def connect_mt5(self,symbol='XAUUSD',path=None,timestamp_offset_seconds=0):
         with self.lock:
             if self.connected:
@@ -106,16 +134,16 @@ class MT5Adapter:
                 # Deterministic preference; alternatives disclosed to user.
                 symbol=sorted(candidates,key=lambda x:(not x.upper().startswith('XAUUSD'),len(x),x))[0]
             if not mt5.symbol_select(symbol,True):mt5.shutdown();raise FeedError('Cannot select gold symbol')
-            self.symbol=symbol;self.connected=True;self.terminal_path=path
+            self.symbol=symbol;self.connected=True;self.terminal_path=path;self.session_health_reason='connected_pending_quote'
             return self.get_symbol_info()
     def disconnect_mt5(self):
         with self.lock:
             if self.mt5 and self.connected:self.mt5.shutdown();self.shutdown_calls+=1
-            self.connected=False
+            self.connected=False;self.session_health_reason='disconnected'
     def refresh_session(self,reason):
         """Perform one serialized shutdown/reinitialize cycle; caller controls backoff."""
         with self.lock:
-            self.last_reconnect_reason=str(reason); self.reconnect_attempts+=1
+            self.last_reconnect_reason=str(reason); self.reconnect_attempts+=1; self.last_refresh_attempt_at=time.time();self.session_health_reason='refreshing_session'
             path=self.terminal_path; symbol=self.symbol or 'XAUUSD'; offset=self.timestamp_offset_seconds
             if self.connected:self.disconnect_mt5()
             time.sleep(0.25)
@@ -126,7 +154,7 @@ class MT5Adapter:
         with self.lock:
             self.check();s=self.mt5.symbol_info(self.symbol)
             if s is None:raise FeedError('Symbol metadata unavailable')
-            return {'symbol':s.name,'digits':s.digits,'point':s.point,'description':s.description,'source':'MT5','trade_stops_level':int(getattr(s,'trade_stops_level',0)),'trade_freeze_level':int(getattr(s,'trade_freeze_level',0)),'trade_mode':int(getattr(s,'trade_mode',-1)),'visible':bool(getattr(s,'visible',True)),'volume_min':float(getattr(s,'volume_min',0)),'volume_max':float(getattr(s,'volume_max',0)),'volume_step':float(getattr(s,'volume_step',0))}
+            return {'symbol':s.name,'digits':s.digits,'point':s.point,'trade_tick_size':float(getattr(s,'trade_tick_size',0)),'description':s.description,'source':'MT5','trade_stops_level':int(getattr(s,'trade_stops_level',0)),'trade_freeze_level':int(getattr(s,'trade_freeze_level',0)),'trade_mode':int(getattr(s,'trade_mode',-1)),'visible':bool(getattr(s,'visible',True)),'volume_min':float(getattr(s,'volume_min',0)),'volume_max':float(getattr(s,'volume_max',0)),'volume_step':float(getattr(s,'volume_step',0))}
     def discover_symbols(self,query=''):
         with self.lock:
             self.check(); q=query.upper().strip(); result=[]
@@ -175,13 +203,16 @@ class MT5Adapter:
             if s is None:raise FeedError('Symbol metadata unavailable')
             step=float(getattr(s,'volume_step',0));minimum=float(getattr(s,'volume_min',0));maximum=float(getattr(s,'volume_max',0))
             if step<=0 or volume<minimum or volume>maximum or abs(round((volume-minimum)/step)-((volume-minimum)/step))>1e-7:raise FeedError('Requested lot violates broker volume limits')
-            direction=signal['direction'];digits=int(s.digits);point=float(s.point);entry=tick['ask'] if direction=='BUY' else tick['bid']
+            direction=signal['direction'];digits=int(s.digits);point=float(s.point);tick_size=float(getattr(s,'trade_tick_size',0) or point);entry=tick['ask'] if direction=='BUY' else tick['bid']
             invalidation=(signal.get('invalidation') or {}).get('price');targets=signal.get('targets') or []
             if invalidation is None or not targets:raise FeedError('Current strategy did not supply both invalidation and target')
-            sl=round(float(invalidation),digits);tp=round(float(targets[0]['price']),digits);minimum_distance=max(float(getattr(s,'trade_stops_level',0))*point,float(getattr(s,'trade_freeze_level',0))*point,point)
+            try:sl=normalize_order_price(invalidation,tick_size,digits);tp=normalize_order_price(targets[0].get('price'),tick_size,digits)
+            except (TypeError,ValueError) as e:raise FeedError(f'Strategy supplied invalid SL/TP: {e}') from e
+            minimum_distance=max(float(getattr(s,'trade_stops_level',0))*point,float(getattr(s,'trade_freeze_level',0))*point,point)
             bid,ask=tick['bid'],tick['ask']
-            valid=(direction=='BUY' and sl<=bid-minimum_distance and tp>=ask+minimum_distance) or (direction=='SELL' and sl>=ask+minimum_distance and tp<=bid-minimum_distance)
-            if not valid:raise FeedError('Strategy SL/TP violates direction or broker stop-level requirements')
+            failures=preflight_sl_tp(direction,entry,bid,ask,sl,tp,minimum_distance)
+            self.last_preflight_debug={'signal_id':signal.get('signal_id'),'direction':direction,'entry':entry,'bid':bid,'ask':ask,'sl':sl,'tp':tp,'point':point,'tick_size':tick_size,'digits':digits,'trade_stops_level':int(getattr(s,'trade_stops_level',0)),'trade_freeze_level':int(getattr(s,'trade_freeze_level',0)),'minimum_distance':minimum_distance,'failed_conditions':failures}
+            if failures:raise FeedError('Strategy SL/TP violates direction or broker stop-level requirements: '+', '.join(failures))
             typ=getattr(self.mt5,'ORDER_TYPE_BUY') if direction=='BUY' else getattr(self.mt5,'ORDER_TYPE_SELL')
             return {'action':getattr(self.mt5,'TRADE_ACTION_DEAL'),'symbol':self.symbol,'volume':volume,'type':typ,'price':round(entry,digits),'sl':sl,'tp':tp,'deviation':20,'magic':magic,'comment':'DTW demo signal','type_time':getattr(self.mt5,'ORDER_TIME_GTC'),'type_filling':getattr(self.mt5,'ORDER_FILLING_IOC'),'spread':tick['spread']}
     def send_order(self,request):

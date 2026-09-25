@@ -89,16 +89,35 @@ class Service:
             # Lifecycle recovery is independent of auto-trading.  It only
             # reads positions/history and is throttled by the controller.
             if self.provider=='MT5':self.execution.reconcile_periodic()
-            try:self._cache=self._collect()
+            try:
+                self._cache=self._collect()
+                if self.provider=='MT5':
+                    # Only a fresh successful collection proves that the MT5
+                    # session is healthy.  initialize() alone is insufficient.
+                    self._reconnect_index=0;self._next_reconnect=0.0
+                    self.mt5.refresh_backoff_seconds=0;self.mt5.session_health_reason='healthy'
             except (FeedError,ValueError) as e:
-                if self.provider=='MT5' and time.monotonic()>=self._next_reconnect:
+                stale=self.provider=='MT5' and 'Quote is stale' in str(e)
+                if stale:
+                    # A stale timestamp is a market-data freshness problem, not
+                    # evidence that the Python/terminal session is broken.  Do
+                    # not shutdown/reinitialize MT5; exponentially back off
+                    # passive retries until a normal poll obtains a fresh tick.
+                    self.mt5.stale_quote_count+=1;self.mt5.last_stale_quote_at=time.time();self.mt5.last_reconnect_reason=str(e);self.mt5.session_health_reason='stale_quote'
+                    if time.monotonic()>=self._next_reconnect:
+                        delay=self._reconnect_backoff[min(self._reconnect_index,len(self._reconnect_backoff)-1)];self._reconnect_index=min(self._reconnect_index+1,len(self._reconnect_backoff)-1);self._next_reconnect=time.monotonic()+delay;self.mt5.refresh_backoff_seconds=delay
+                elif self.provider=='MT5' and time.monotonic()>=self._next_reconnect:
                     try:
-                        self.mt5.refresh_session(str(e)); self.mt5.get_current_tick(); account=self.mt5.execution_account()
+                        self.mt5.refresh_session(str(e)); fresh_tick=self.mt5.get_current_tick()
+                        if time.time()-fresh_tick['time']>120:raise FeedError('Quote is stale; MT5 session refresh required')
+                        account=self.mt5.execution_account()
                         if not account.get('demo_confirmed'): raise FeedError(account.get('reason','Account session invalid'))
-                        self._reconnect_index=0; self._next_reconnect=time.monotonic()+1
+                        self._reconnect_index=0; self._next_reconnect=0.0;self.mt5.refresh_backoff_seconds=0;self.mt5.session_health_reason='healthy'
                     except Exception as reconnect_error:
                         delay=self._reconnect_backoff[min(self._reconnect_index,len(self._reconnect_backoff)-1)];self._reconnect_index=min(self._reconnect_index+1,len(self._reconnect_backoff)-1);self._next_reconnect=time.monotonic()+delay
-                        self.mt5.last_reconnect_reason=f'{e}; refresh failed: {reconnect_error}'
+                        if 'Quote is stale' in str(reconnect_error):self.mt5.stale_quote_count+=1;self.mt5.last_stale_quote_at=time.time();self.mt5.session_health_reason='stale_quote_after_refresh'
+                        else:self.mt5.session_health_reason='session_or_api_refresh_failed'
+                        self.mt5.refresh_backoff_seconds=delay;self.mt5.last_reconnect_reason=f'{e}; refresh failed: {reconnect_error}'
                 # A transient quote read failure must not erase the last valid
                 # live snapshot.  Consumers use the cache as the transport
                 # source, so replacing it with an empty error object would
