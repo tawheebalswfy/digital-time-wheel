@@ -110,7 +110,7 @@ class ExecutionController:
             if self.settings.cooldown_minutes and recent and recent[0].get('sent_at'):
                 sent=datetime.fromisoformat(recent[0]['sent_at']).timestamp()
                 if time.time()<sent+self.settings.cooldown_minutes*60:self.last_blocking_reason='Cooldown active';return
-            try: request=self.preview(signal)
+            try: request=self.preview({**signal,'signal_id':signal_id})
             except Exception as e:self.last_error='Order preflight: '+str(e);self.last_blocking_reason=self.last_error;return
             if self.settings.maximum_spread is not None and request['spread']>self.settings.maximum_spread:self.last_blocking_reason='Spread too high';return
             # Compact deterministic broker comment; database remains authoritative.
